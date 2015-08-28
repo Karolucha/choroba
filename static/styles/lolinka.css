@@ -1,0 +1,41 @@
+*{
+    margin: 0px;
+}
+html, body {
+    height: 100%;
+}
+
+.gora_dol {
+    height: 50%;
+    width: 100%;
+
+}
+
+#gora {
+    background-image: url("../images/night_background.jpg");
+}
+
+#pasek {
+    position: fixed;
+    top: 50%;
+    height: 2%;
+    width: 99.5%;
+    border: 5px solid brown;
+    background-color: cyan;
+}
+
+#kwadrat{
+    position: absolute;
+    width: 30%;
+    height: 40%;
+    border: 5px solid darkblue;
+    background: #000000;
+    margin-left: 35%;
+    margin-top: -10%;
+    z-index: 100; /* dodatni oznacza wypchniêcie NAD obiekty o ni¿szym z*/
+}
+
+
+#dol {
+    background-image: url("../images/day_background.jpg");
+}
