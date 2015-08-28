@@ -16,44 +16,7 @@
 </div>
 
 <div id="logging">
-    {% if user.is_authenticated %}
-       <p>
-        <h2 id="user_welcome">Witaj, {{ user.username }}!</h2>
-        <a id="logout_button" href="{% url 'page.views.logout_method' %}">Wyloguj siê</a>
-        </p>
-    {% else %}
-      <p>
-        <form method="post" action="{% url 'page.views.login_method' %}">
-            {% csrf_token %}
-            <table>
-                <tr>
-                    <td>
-                        <label for="id_username">Username:</label> <input id="id_username"
-                                                                          type="text" name="username" maxlength="30"
-                                                                          size="17"/>
-                    </td>
-                    <td>
-                        <input class="login" type="submit" value="Zaloguj" style="cursor: pointer; font-size: 105%;"/>
-                    </td>
 
-                </tr>
-                <tr>
-                    <td>
-                        <label for="id_password">Password:</label> <input type="password"
-                                                                          name="password" id="id_password" size="17"/>
-                    </td>
-
-                    <td>
-                        <a href="/register">
-                            <div class="login">
-                                Zarejestruj
-                            </div>
-                        </a>
-                    </td>
-
-            </table>
-        </form>
-</p>
         {% if login_problem %}
             <link rel="stylesheet" href="{{ STATIC_URL }}toastmessage/static/css/jquery.toastmessage.css">
 
@@ -62,7 +25,7 @@
                 $().toastmessage('showErrorToast', "Niepoprawne dane logowania!");
             </script>
         {% endif %}
-    {% endif %}
+
 </div>
 
 <div style="clear: both;"></div>
@@ -72,8 +35,7 @@
 <ul class="decent_background" id="menu">
 
 
-    <li><a href="{% url 'locations.views.locations' %}"
-           class="big_menu_button">CHOROBY</a>
+    <li> 
         <ul>
             <li><a href="/locations" class="small_menu_button">WYSZUKAJ TEMAT</a></li>
             <li><a href="/location_adding" class="small_menu_button">NOWY KOMENTARZ</a></li>
