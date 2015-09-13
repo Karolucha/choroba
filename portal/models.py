@@ -1,9 +1,23 @@
-from django.db import models
+"""from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import Permission
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User"""
 # Create your models here.
-    
+from mongoengine import *
+
+
+class Choice(EmbeddedDocument):
+    choice_text = StringField(max_length=200)
+    votes = IntField(default=0)
+
+
+class Poll(Document):
+    question = StringField(max_length=200)
+    pub_date = DateTimeField(help_text='date published')
+    choices = ListField(EmbeddedDocumentField(Choice))
+
+
+"""
 class UserRoles(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=500, null=True)
@@ -21,7 +35,7 @@ class MyUser(models.Model):
     role_id = models.ForeignKey(UserRoles)
     friends = models.ManyToManyField(User)
     
-# TODO zastanowiæ siê jakie uprawnienia
+# TODO zastanowiï¿½ siï¿½ jakie uprawnienia
 # Permission.objects.create(codename='can_add_new_place',
 #                           name='Dodawanie nowego miejsca')
 # Permission.objects.create(codename='can_add_comment',
@@ -51,20 +65,4 @@ class Disease(models.Model):
     cure = models.CharField(max_length=1000)
     articles = models.ManyToManyField(Article)
     comments = models.ManyToManyField(Comment)
-    
-        
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        
-    
+"""
