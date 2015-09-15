@@ -29,8 +29,6 @@ SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '^tm++kq+^#4h9hftwh9j*d^*c4^!m0b9tqig4r6s90k3h41vn*'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -52,10 +50,10 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    #'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'django.middleware.security.SecurityMiddleware',
+    #'django.middleware.security.SecurityMiddleware',
 )
 
 ROOT_URLCONF = 'Choroba.urls'
@@ -74,15 +72,27 @@ WSGI_APPLICATION = 'Choroba.wsgi.application'
 # }
 import mongoengine
 
-DATABASES = {
-    'default': {
-        'ENGINE': '',
-    },
-}
-
-SESSION_ENGINE = 'mongoengine.django.sessions' # optional
-
-
+# DATABASES = {
+#     'default': {
+#         'ENGINE': '',
+#       'NAME': ''
+#     },
+# }
+#
+# SESSION_ENGINE = 'mongoengine.django.sessions' # optional
+# _MONGODB_USER = 'lala'
+# _MONGODB_PASSWD = '123456'
+# _MONGODB_HOST = '127.0.0.1'
+# _MONGODB_NAME = 'misiowa'
+# _MONGODB_DATABASE_HOST = \
+#     'mongodb://%s:%s@%s/%s' \
+#     % (_MONGODB_USER, _MONGODB_PASSWD, _MONGODB_HOST, _MONGODB_NAME)
+#
+# #mongoengine.connect(_MONGODB_NAME, host=_MONGODB_DATABASE_HOST)
+# mongoengine.connect('misiowa')
+# AUTHENTICATION_BACKENDS = (
+#     'mongoengine.django.auth.MongoEngineBackend',
+# )
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -101,3 +111,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+
+DEBUG=True
+TEMPLATE_DEBUG=True

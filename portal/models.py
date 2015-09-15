@@ -4,6 +4,8 @@ from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User"""
 # Create your models here.
 from mongoengine import *
+from mongoengine.django.auth import *
+print(connect('misiowa'))
 
 
 class Choice(EmbeddedDocument):
@@ -13,10 +15,61 @@ class Choice(EmbeddedDocument):
 
 class Poll(Document):
     question = StringField(max_length=200)
-    pub_date = DateTimeField(help_text='date published')
+    #pub_date = DateTimeField(help_text='date published')
     choices = ListField(EmbeddedDocumentField(Choice))
 
+#choice = Choice()
+#choice.save()
+poll =Poll()
+poll.save()
 
+class UserRoles(Document):
+    name = StringField()
+    description = StringField(null=True)
+
+class MyUser(User):
+    birthdate = DateTimeField(null=True)
+    sex = StringField(max_length=1, null=True)
+    note = StringField(max_length=500, null=True)
+    point = IntField(null=True, default=0)
+    comment_count = IntField(null=True, default=0)
+    disease_added_count = IntField(null=True, default=0)
+    discusion_present_count = IntField(null=True, default=0)
+    role_id = ReferenceField(UserRoles)
+    friends = ListField(ReferenceField('self'))
+
+class Comment(Document):
+    user = ReferenceField(MyUser)
+    date_publication = DateTimeField()
+    name = StringField(max_length=200, null=True)
+    description = StringField(max_length=1000)
+    time_duration = StringField(max_length=200, null=True)
+    tips = StringField(max_length=200, null=True)
+    points_tips = FloatField()
+    point_comment = FloatField()
+
+class Article(Document):
+    user = ReferenceField(MyUser)
+    date_publication = DateTimeField()
+    name = StringField(max_length=200)
+    description = StringField()
+
+class Disease(Document):
+    name = StringField(max_length=100)
+    description = StringField(max_length=1000, null=True)
+    cure = StringField(max_length=1000, null=True)
+    articles = ListField(ReferenceField(Article))
+    comments = ListField(ReferenceField(Comment))
+
+userRole = UserRoles(name='normal')
+userRole.save()
+userRole = UserRoles(name='admin')
+userRole.save()
+
+user = MyUser(username='bob', password='bobpass')
+user.save()
+
+disease =Disease(name='alergia: roztocze', description='kazdy na to cierpi', '')
 """
 class UserRoles(models.Model):
     name = models.CharField(max_length=200)
