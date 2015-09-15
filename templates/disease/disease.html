@@ -8,10 +8,7 @@
 DISEASE:
 
 {{ disease.Name}}
-<h2><a href="/disease/{{disease.id}}">
-    {{ disease.name|upper }}
-</a>
-</h2>
-<p>{{ disease.description|truncatewords:"10" }}</p>
+<h2{{ disease.name|upper }}</h2>
+<p>{{ disease.description }}</p>
 
 {% endblock %}
