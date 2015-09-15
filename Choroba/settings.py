@@ -59,8 +59,18 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'Choroba.urls'
 
 WSGI_APPLICATION = 'Choroba.wsgi.application'
+# = 'mongo_auth.MongoUser'
+
+# MongoDB settings
+MONGODB_DATABASES = {
+    'default': {'name': 'django_mongoengine'}
+}
+#DJANGO_MONGOENGINE_OVERRIDE_ADMIN = True
 
 
+DATABASES = {
+    'default': {'ENGINE': 'django.db.backends.dummy'}
+}
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 

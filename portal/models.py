@@ -4,7 +4,9 @@ from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User"""
 # Create your models here.
 from mongoengine import *
-from mongoengine.django.auth import *
+
+from django_mongoengine.auth.models import User
+
 print(connect('misiowa'))
 
 
@@ -61,15 +63,15 @@ class Disease(Document):
     articles = ListField(ReferenceField(Article))
     comments = ListField(ReferenceField(Comment))
 
-userRole = UserRoles(name='normal')
-userRole.save()
-userRole = UserRoles(name='admin')
-userRole.save()
-
-user = MyUser(username='bob', password='bobpass')
-user.save()
-
-disease =Disease(name='alergia: roztocze', description='kazdy na to cierpi', '')
+# userRole = UserRoles(name='normal')
+# userRole.save()
+# userRole = UserRoles(name='admin')
+# userRole.save()
+#
+# user = MyUser(username='bob', password='bobpass')
+# user.save()
+#
+# disease =Disease(name='alergia: roztocze', description='kazdy na to cierpi')
 """
 class UserRoles(models.Model):
     name = models.CharField(max_length=200)
