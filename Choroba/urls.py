@@ -19,4 +19,6 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'portal.views.index', name='home'),
+    url(r'^search_disease/', 'portal.views.search_disease'),
+    url(r'^disease/(?P<disease_id>\w+)', 'portal.views.disease'),
 ]

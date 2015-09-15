@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
+
+{% block title %}{{disease.name}}{% endblock %}
+{% block content %}
+DISEASE:
+
+{{ disease.Name}}
+<h2><a href="/disease/{{disease.id}}">
+    {{ disease.name|upper }}
+</a>
+</h2>
+<p>{{ disease.description|truncatewords:"10" }}</p>
+
+{% endblock %}

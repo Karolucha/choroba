@@ -1,11 +1,11 @@
-{% extends "base/base.html" %}
+{% extends "base.html" %}
 
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
 
-<html>
-<body>
 
+{% block content %}
+Go go go!
 
 <div id="gora" class="gora_dol">
 Go go go!
@@ -21,6 +21,4 @@ Test
 
 <div id="dol" class="gora_dol"></div>
 
-
-</body>
-</html>
+{% endblock %}

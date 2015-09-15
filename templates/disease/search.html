@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
+
+{% block title %}Wyszukiwarka{% endblock %}
+{% block content %}
+SEARCH
+
+{% for disease in diseases_list %}
+{{ disease.Name}}
+<h2><a href="/disease/{{disease.id}}">
+    {{ disease.name|upper }}
+</a>
+</h2>
+<p>{{ disease.description|truncatewords:"10" }}</p>
+{% endfor %}
+
+{% endblock %}
