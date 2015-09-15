@@ -20,10 +20,7 @@ class Poll(Document):
     #pub_date = DateTimeField(help_text='date published')
     choices = ListField(EmbeddedDocumentField(Choice))
 
-#choice = Choice()
-#choice.save()
-poll =Poll()
-poll.save()
+
 
 class UserRoles(Document):
     name = StringField()
