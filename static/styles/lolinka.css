@@ -1,16 +1,14 @@
-*{
-    margin: 0px;
-}
-html, body {
-    height: 100%;
-}
+
+
 
 .gora_dol {
     height: 50%;
     width: 100%;
 
 }
-
+#description_disease_short{
+        color: #E1EFF8;
+}
 #gora {
     background-image: url("../images/night_background.jpg");
 }
@@ -32,7 +30,7 @@ html, body {
     background: #000000;
     margin-left: 35%;
     margin-top: -10%;
-    z-index: 100; /* dodatni oznacza wypchniêcie NAD obiekty o ni¿szym z*/
+    z-index: 100; /* dodatni oznacza wypchniï¿½cie NAD obiekty o niï¿½szym z*/
 }
 
 
