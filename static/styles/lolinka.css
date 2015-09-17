@@ -1,16 +1,23 @@
 
-
-
-.gora_dol {
-    height: 50%;
-    width: 100%;
-
-}
 #description_disease_short{
         color: #E1EFF8;
 }
 #gora {
     background-image: url("../images/night_background.jpg");
+}
+.comment{
+border:2px solid #ACE1AF;
+color: 	#660033;
+width:50%;
+height:150px;
+}
+.comment_header{
+margin:10px;
+
+}
+.comment_dsc{
+margin:10px;
+
 }
 #content{
     margin:0px;

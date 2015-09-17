@@ -15,6 +15,43 @@ def index(request):
     # poll.save()
     return render(request, 'base/index.html', {'all_news': None})
 
+def search_disease(request):
+   # initializer()
+
+    if (request.POST):
+        diseases = Disease.objects.filter(name__startswith=request.POST.get('search_disease'))
+    else:
+        diseases = Disease.objects.all()
+
+    return render(request, 'disease/search.html', {'diseases_list': diseases})
+
+def disease(request, disease_id):
+    try:
+        get_disease = Disease.objects.get(id=disease_id)
+    except Disease.DoesNotExist:
+        raise Http404("Poll does not exist")
+    return render_to_response('disease/disease.html', {'disease': get_disease})
+
+def result_disease(request, disease_name):
+    if (request.POST):
+        get_disease = Disease.objects.filter(name__startswith=request.POST.get('last_name_searchbox','no'))
+    else:
+        return (request, 'base/index.html', {'all_news': None})
+    return render_to_response('disease/disease.html', {'disease': get_disease})
+
+def articles(request):
+    try:
+        articles_list = Article.objects.all()
+    except Disease.DoesNotExist:
+        raise Http404("Poll does not exist")
+    return render_to_response('disease/articles.html', {'articles': articles_list})
+
+def article(request, article_id):
+    try:
+        get_article = Article.objects.get(id=article_id)
+    except Disease.DoesNotExist:
+        raise Http404("Poll does not exist")
+    return render_to_response('disease/article.html', {'article': get_article})
 
 
 def initializer():
@@ -50,14 +87,3 @@ def initializer():
     diseases_creator.articles = [article_creator, article_creator2]
     diseases_creator.save()
 
-def search_disease(request):
-   # initializer()
-    diseases = Disease.objects.all()
-    return render(request, 'disease/search.html', {'diseases_list': diseases})
-
-def disease(request, disease_id):
-    try:
-        get_disease = Disease.objects.get(id=disease_id)
-    except Disease.DoesNotExist:
-        raise Http404("Poll does not exist")
-    return render_to_response('disease/disease.html', {'disease': get_disease})

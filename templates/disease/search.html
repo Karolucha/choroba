@@ -6,8 +6,10 @@
 {% block title %}Wyszukiwarka{% endblock %}
 {% block content %}
 <p>Wyszukaj interesującej dolegliwości</p>
-<input type="text" id="last_name_searchbox" class="name_searchbox" value="" />
-
+<form action="{% url 'portal.views.search_disease' %}" method="POST">
+<input type="text" id="last_name_searchbox" class="name_searchbox" value=""/>
+<input type="submit" id="submit_searchbox" class="btn btn-success" name="search_disease" value="Szukaj"/>
+</form>
 <p>Ostatnio omawianie:</p>
 {% for disease in diseases_list %}
 <div class="disease">

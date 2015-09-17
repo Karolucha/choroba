@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}Artykuł{% endblock %}
+{% block content %}
+<h2>Artykuły</h2>
+{% for article in articles %}
+<p><strong>
+    <a href="/article/{{article.id}}">
+        {{ article.name }}
+    </a>
+</strong></p>
+<div id="description_disease_short">
+    {{ article.description|truncatewords:"3" }}
+</div>
+{% endfor %}
+
+{% endblock %}

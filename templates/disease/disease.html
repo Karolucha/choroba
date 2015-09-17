@@ -4,17 +4,23 @@
 
 {% block title %}{{disease.name}}{% endblock %}
 {% block content %}
-DISEASE:
-
-
-<h3>Artykuły w dziedzinie {{ disease.Name}}</h3>
+<h4>Artykuły w dziedzinie {{ disease.name}}</h4>
 {% for article in disease.articles %}
-<div id="description_disease_short">
-{{ article.description|truncatewords:"3" }}
-</div>
+    <div id="description_disease_short">
+        <a href="/article/{{article.id}}">
+            {{ article.description|truncatewords:"3" }}
+        </a>
+    </div>
 {% endfor %}
-
-<h2>{{ disease.name|upper }}</h2>
-<p>{{ disease.description }}</p>
-
+FORUM
+<h3>{{ disease.name|upper }}</h3>
+<p>Opis: {{ disease.description }}</p>
+<div id="commentaries">
+    {% for comment in disease.comments %}
+        <div class="comment">
+            <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
+            <p class="comment_dsc">{{ comment.description }}</p>
+        </div>
+    {% endfor %}
+</div>
 {% endblock %}
