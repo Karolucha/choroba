@@ -5,15 +5,23 @@
 
 {% block title %}Wyszukiwarka{% endblock %}
 {% block content %}
-SEARCH
+<p>Wyszukaj interesującej dolegliwości</p>
+<input type="text" id="last_name_searchbox" class="name_searchbox" value="" />
 
+<p>Ostatnio omawianie:</p>
 {% for disease in diseases_list %}
+<div class="disease">
 {{ disease.Name}}
-<h2><a href="/disease/{{disease.id}}">
+<h3><a href="/disease/{{disease.id}}">
     {{ disease.name|upper }}
 </a>
-</h2>
-<p>{{ disease.description|truncatewords:"10" }}</p>
+</h3>
+Opis:
+    <div class="disease_description">
+<p>{{ disease.description|truncatewords:"10" }}...</p>
+        </div>
+</div>
+<hr>
 {% endfor %}
 
 {% endblock %}

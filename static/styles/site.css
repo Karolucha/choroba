@@ -1,21 +1,34 @@
 body {
+    margin:10px;
+    margin-left:10px;
+    margin-right:100px;
     padding-top: 30px;
-    font-family: "Open Sans", Helvetica, Arial;
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;;
     height: 100%;
-    background: #69bbef; /* Old browsers */
+    background: #7FFFD4; /* Old browsers */
     background-repeat: no-repeat;
     background-attachment: fixed;
     overflow: auto;
+    font-size: 14px;
+    line-height: 1.428571429;
      /* fallback */
 
      background-position: center center;
      background-repeat: no-repeat; /* Safari 4-5, Chrome 1-9 */ /* Can't specify a percentage size? Laaaaaame. */
-     background: -webkit-gradient(radial, 50%, from(#f1fcfc), to(#69bbef)); /* Safari 5.1+, Chrome 10+ */
-     background: -webkit-radial-gradient(50%, #f1fcfc, #69bbef); /* Firefox 3.6+ */
-     background: -moz-radial-gradient(circle, #f1fcfc, #69bbef); /* IE 10 */
-     background: -ms-radial-gradient(circle, #f1fcfc, #69bbef); /* Opera couldn't do radial gradients, then at some point they started supporting the -webkit- syntax, how it kinda does but it's kinda broken (doesn't do sizing) */
+     background: -webkit-gradient(radial, 50%, from(#f1fcfc), to(#7FFFD4)); /* Safari 5.1+, Chrome 10+ */
+     background: -webkit-radial-gradient(50%, #f1fcfc, #7FFFD4); /* Firefox 3.6+ */
+     background: -moz-radial-gradient(circle, #f1fcfc, #7FFFD4); /* IE 10 */
+     background: -ms-radial-gradient(circle, #f1fcfc, #7FFFD4); /* Opera couldn't do radial gradients, then at some point they started supporting the -webkit- syntax, how it kinda does but it's kinda broken (doesn't do sizing) */
 
 }
+html, body
+    .page {position:relative;}
+    .left-bar {position:absolute; left:0px; width:180px; height:100%; border-right:2px solid #ACE1AF;}
+    .right-bar {margin-left:200px; padding-top:150px;}
+    .header {position:fixed; width:100%; top:0px;bottom:0px; right:0px; height:80px; border:2px solid #ACE1AF; background:#ACE1AF;}
+
+    .footer {height:40px; width:100%; border-top:1px solid green; background:#ACE1AF;}
+
 .btn-return {
   color: #ffffff;
   background-color: #c0c0c0;
