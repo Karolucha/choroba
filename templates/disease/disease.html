@@ -18,9 +18,14 @@ FORUM
 <div id="commentaries">
     {% for comment in disease.comments %}
         <div class="comment">
+            <img src="../static/images/landscape.png" class="image_little_profile"/>
             <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
             <p class="comment_dsc">{{ comment.description }}</p>
         </div>
     {% endfor %}
+</div>
+<div id="add_my_comment">
+    <textarea class="textarea_comment">A ja w czasie {{disease.name}} ...</textarea>
+    <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Dodaj komentarz"/>
 </div>
 {% endblock %}

@@ -5,11 +5,21 @@
 #gora {
     background-image: url("../images/night_background.jpg");
 }
+
+#commentaries{
+margin:30px;
+
+}
+img.image_little_profile{
+max-width:90px;
+max-height:200px;
+}
 .comment{
-border:2px solid #ACE1AF;
+border-top:2px solid #800000;
 color: 	#660033;
 width:50%;
 height:150px;
+
 }
 .comment_header{
 margin:10px;
@@ -21,6 +31,20 @@ margin:10px;
 }
 #content{
     margin:0px;
+}
+#add_my_comment{
+margin-top:30px;
+border-top:4px solid #800000;
+}
+textarea.textarea_comment{
+font-size: 20px;
+    width: 50%;
+    margin:15px;
+    text-align: left;
+    padding: 7px;
+    border: 3px solid  	#008000;
+    box-shadow: 2px 2px 2px #777777;
+    border-radius: 4px;
 }
 input.name_searchbox {
     font-size: 25px;
