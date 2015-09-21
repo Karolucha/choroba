@@ -15,33 +15,45 @@
 
 
 
-<div id="logging">
 
-        {% if login_problem %}
-            <link rel="stylesheet" href="{{ STATIC_URL }}toastmessage/static/css/jquery.toastmessage.css">
-
-            <script src="{{ STATIC_URL }}toastmessage/static//js/jquery.toastmessage.js"></script>
-            <script type="text/javascript">
-                $().toastmessage('showErrorToast', "Niepoprawne dane logowania!");
-            </script>
-        {% endif %}
-
-</div>
 
 <div class="page">
+
     <div class="left-bar">
         <div class="menu" style="margin-top:80px">
         <ul class="menu">
             <li><a href="/search_disease/" class="small_menu_button">WYSZUKAJ TEMAT</a></li>
             <li><a href="/articles" class="small_menu_button">ARTYKUŁY</a></li>
-            <li><a href="/konto" class="big_menu_button">MOJE KONTO</a> </li>
+            <li><a href="/account" class="big_menu_button">MOJE KONTO</a> </li>
         </ul>
  </div>
     </div>
     <div class="right-bar">
         <div class="header">
-            <div class="decent_background" id="header">
-                <h1 id="header_text" style="text-align:center">{% block header %}Moje zdrowie{% endblock %}</h1>
+            <div class="decent_background" id="header">	<div id="logging">
+		{% if user.is_authenticated %}
+		<h2 id="user_welcome">Witaj, {{user.username}}!</h2>
+		  <a id="logout_button" href="{% url 'portal.user_views.logouting' %}">Wyloguj się</a>
+		{% else %}
+		<form method="post" action="{% url 'portal.user_views.logging' %}">
+			{% csrf_token %}
+				<p>
+					<label for="id_username">Username:</label> <input id="id_username"
+						type="text" name="username" maxlength="30" size="17" />
+				</p>
+				<p>
+					<label for="id_password">Password:</label> <input type="password"
+						name="password" id="id_password" size="17" />
+				</p>
+
+
+			<div id="log_button">
+				<input id="login" type="submit" value="Log in" />
+			</div>
+		</form>
+		{% endif %}
+	</div>
+                <h1 id="header_text" style="text-align:center">{% block header %}Hipochondryk{% endblock %}</h1>
             </div>
         </div>
         <div class="content">

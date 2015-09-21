@@ -1,5 +1,5 @@
 body {
-    margin:10px;
+    margin:0px;
     margin-left:10px;
     margin-right:100px;
     padding-top: 30px;
@@ -23,11 +23,12 @@ body {
 }
 html, body
     .page {position:relative;}
-    .left-bar {position:absolute; left:0px; width:180px; height:100%; border-right:2px solid #ACE1AF;}
-    .right-bar {margin-left:200px; padding-top:150px;}
-    .header {position:fixed; width:100%; top:0px;bottom:0px; right:0px; height:80px; border:2px solid #ACE1AF; background:#ACE1AF;}
+    .left-bar {position:absolute; text-align: right; width:180px; height:100%; border-right:2px; position:fixed; margin-left:10%;}
+    .right-bar {margin-left:20%; padding-top:150px;}
+    .left-maginator {margin-left:20%; }
+    .header {position:fixed; width:100%; top:0px;bottom:0px; right:0px; height:80px; border:2px solid #ACE1AF; background:#DBE3DE;}
 
-    .footer {height:40px; width:100%; border-top:1px solid green; background:#ACE1AF;}
+    .footer {height:40px; width:100%; border-top:1px solid green; background:#DBE3DE;}
 
 .btn-return {
   color: #ffffff;

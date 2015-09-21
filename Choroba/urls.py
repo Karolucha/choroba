@@ -23,5 +23,9 @@ urlpatterns = [
     url(r'^articles/', 'portal.views.articles'),
     url(r'^disease/(?P<disease_id>\w+)', 'portal.views.disease'),
     url(r'^article/(?P<article_id>\w+)', 'portal.views.article'),
-
+    url(r'^account/$', 'portal.user_views.account'),
+    url(r'^register/(?P<problems>\d+)', 'portal.user_views.register'),
+    url(r'^register/$', 'portal.user_views.register'),
+    url(r'^login/$', 'portal.user_views.logging'),
+    url(r'^logout/$', 'portal.user_views.logouting'),
 ]

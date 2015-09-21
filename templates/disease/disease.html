@@ -7,7 +7,7 @@
 <h4>Artykuły w dziedzinie {{ disease.name}}</h4>
 {% for article in disease.articles %}
     <div id="description_disease_short">
-        <a href="/article/{{article.id}}">
+        <a href="/article/{{article.id}}" style="margin-left:10px;">
             {{ article.description|truncatewords:"3" }}
         </a>
     </div>
@@ -25,7 +25,9 @@ FORUM
     {% endfor %}
 </div>
 <div id="add_my_comment">
+    <form>
     <textarea class="textarea_comment">A ja w czasie {{disease.name}} ...</textarea>
     <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Dodaj komentarz"/>
+    </form>
 </div>
 {% endblock %}

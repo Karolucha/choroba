@@ -5,7 +5,7 @@
 
 {% block title %}Wyszukiwarka{% endblock %}
 {% block content %}
-<p>Wyszukaj interesującej dolegliwości</p>
+<p>Wyszukaj interesującej dolegliwości</p>{% csrf_token %}
 <form action="{% url 'portal.views.search_disease' %}" method="POST">
 <input type="text" id="last_name_searchbox" class="name_searchbox" value=""/>
 <input type="submit" id="submit_searchbox" class="btn btn-success" name="search_disease" value="Szukaj"/>
@@ -13,14 +13,15 @@
 <p>Ostatnio omawianie:</p>
 {% for disease in diseases_list %}
 <div class="disease">
-{{ disease.Name}}
+<div><p>{{ disease.Name}}</p></div>
 <h3><a href="/disease/{{disease.id}}">
     {{ disease.name|upper }}
 </a>
 </h3>
 Opis:
     <div class="disease_description">
-<p>{{ disease.description|truncatewords:"10" }}...</p>
+<p style="font-size:18px;">{{ disease.description|truncatewords:"10" }}...</p>
+        <a href="/disease/{{disease.id}}">======>>>></a>
         </div>
 </div>
 <hr>

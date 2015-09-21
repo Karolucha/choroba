@@ -68,9 +68,9 @@ MONGODB_DATABASES = {
 #DJANGO_MONGOENGINE_OVERRIDE_ADMIN = True
 
 
-DATABASES = {
-    'default': {'ENGINE': 'django.db.backends.dummy'}
-}
+# DATABASES = {
+#     'default': {'ENGINE': 'django.db.backends.dummy'}
+# }
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
