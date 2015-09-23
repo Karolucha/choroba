@@ -18,17 +18,30 @@ body {
      background: -webkit-gradient(radial, 50%, from(#f1fcfc), to(#7FFFD4)); /* Safari 5.1+, Chrome 10+ */
      background: -webkit-radial-gradient(50%, #f1fcfc, #7FFFD4); /* Firefox 3.6+ */
      background: -moz-radial-gradient(circle, #f1fcfc, #7FFFD4); /* IE 10 */
-     background: -ms-radial-gradient(circle, #f1fcfc, #7FFFD4); /* Opera couldn't do radial gradients, then at some point they started supporting the -webkit- syntax, how it kinda does but it's kinda broken (doesn't do sizing) */
-
+     background: -ms-radial-gradient(circle, #f1fcfc, #C0D727); /* Opera couldn't do radial gradients, then at some point they started supporting the -webkit- syntax, how it kinda does but it's kinda broken (doesn't do sizing) */
+    background-image:url("../images/fraktak.jpg");
 }
 html, body
-    .page {position:relative;}
-    .left-bar {position:absolute; text-align: right; width:180px; height:100%; border-right:2px; position:fixed; margin-left:10%;}
-    .right-bar {margin-left:20%; padding-top:150px;}
-    .left-maginator {margin-left:20%; }
-    .header {position:fixed; width:100%; top:0px;bottom:0px; right:0px; height:80px; border:2px solid #ACE1AF; background:#DBE3DE;}
+    .page {position:relative; height:700px;}
+    .left-bar {position:absolute; width:20%; height:100%; border-right:2px;margin-left:5%;
+     background-repeat: no-repeat; /* Safari 4-5, Chrome 1-9 */ /* Can't specify a percentage size? Laaaaaame. */
+     background: -webkit-gradient(radial, 50%, from(#008000), to(#7FFFD4)); /* Safari 5.1+, Chrome 10+ */
+     background: -webkit-radial-gradient(50%, #FFC0CB, #008000); /* Firefox 3.6+ */
+     background: -moz-radial-gradient(circle, #9FFB88, #FFC000); /* IE 10 */
+     background: -ms-radial-gradient(circle, #FFBF00, #008000);
+     border:2px solid #FAFFFA;color:#D41B56;
+    }
+    .right-bar {margin-left:30%; padding-top:50px;}
 
-    .footer {height:40px; width:100%; border-top:1px solid green; background:#DBE3DE;}
+    .header {position:fixed; width:100%; top:0px;bottom:0px; right:0px; height:80px; border:2px solid #FAFFFA; background:#9FFB88;color:#E34234;}
+    .down-header{width:100%; bottom:80px; height:50px; background:-moz-radial-gradient(circle, #FFBF00, #9FFB88); font-size:25px; }
+    .content{     background-repeat: no-repeat; /* Safari 4-5, Chrome 1-9 */ /* Can't specify a percentage size? Laaaaaame. */
+     background: -webkit-gradient(radial, 50%, from(#f1fcfc), to(#7FFFD4)); /* Safari 5.1+, Chrome 10+ */
+     background: -webkit-radial-gradient(50%, #f1fcfc, #7FFFD4); /* Firefox 3.6+ */
+     background: -moz-radial-gradient(circle, #7CFC00, #f1fcfc); /* IE 10 */
+     background: -ms-radial-gradient(circle, #f1fcfc, #7FFFD4);
+     color:#600201;}
+    .footer {height:40px; width:100%; border-top:1px solid green; background:#DBE3DE; margin-top:100px; bottom:0px;}
 
 .btn-return {
   color: #ffffff;

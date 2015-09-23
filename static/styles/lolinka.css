@@ -1,13 +1,28 @@
 
 #description_disease_short{
-        color: #E1EFF8;
+        color: #FF6D66;
+
 }
 #gora {
     background-image: url("../images/night_background.jpg");
 }
+/*left*/
+
+.article_left{
+border-top:2px solid #800000;
+margin:5%;
+}
+
+/*menu*/
+
+.top_menu_button{
+margin-left:15px;
+}
 #logging{
 float: right;
 }
+/*forum*/
+
 #commentaries{
 margin:30px;
 

@@ -16,7 +16,10 @@ def search_disease(request):
     # initializer()
 
     if (request.POST):
-        diseases = Disease.objects.filter(name__startswith=request.POST.get('search_disease'))
+        #print(request.POST.get('last_name_searchbox'))
+        diseases = Disease.objects.filter(name__startswith=request.POST.get('last_name_searchbox'))
+        #print(diseases)
+        #diseases = Disease.objects.all()
     else:
         diseases = Disease.objects.all()
 

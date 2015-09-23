@@ -9,10 +9,12 @@
 <link rel="stylesheet" type="text/css" href="{% static 'styles/site.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap.css' %}"/>
 
-
 </head>
 <body id="body">
-
+<script src="{% static "underscore/underscore.js" %}"></script>
+<script src="{% static "angular/angular.js" %}"></script>
+<script src="{% static "angular-resource/angular-resource.js" %}"></script>
+<script src="{% static "js/script.js" %}"></script>
 
 
 
@@ -20,12 +22,8 @@
 <div class="page">
 
     <div class="left-bar">
-        <div class="menu" style="margin-top:80px">
-        <ul class="menu">
-            <li><a href="/search_disease/" class="small_menu_button">WYSZUKAJ TEMAT</a></li>
-            <li><a href="/articles" class="small_menu_button">ARTYKUŁY</a></li>
-            <li><a href="/account" class="big_menu_button">MOJE KONTO</a> </li>
-        </ul>
+        <div class="menu" style="margin-top:80px; margin-left:10%"; >
+        {% block left-content %} {% endblock %}
  </div>
     </div>
     <div class="right-bar">
@@ -55,9 +53,25 @@
 	</div>
                 <h1 id="header_text" style="text-align:center">{% block header %}Hipochondryk{% endblock %}</h1>
             </div>
+
         </div>
+<div class="down-header" >
+                        <nav>
+                            <a style="color:#D41B56 !important" href="/search_disease/" class="top_menu_button">WYSZUKAJ TEMAT</a>
+            <a style="color:#2E8B57 !important" href="/articles" class="top_menu_button">ARTYKUŁY</a>
+           {% if user.is_authenticated %}
+           <a style="color:#FF2400 !important" href="/account" class="top_menu_button">MOJE KONTO</a>
+             {% endif %}
+        </nav>
+</div>
         <div class="content">
             <div id="content">
+                <nav>
+  <a href="/html/">OPIS</a> |
+  <a href="/css/">PORADY</a> |
+  <a href="/js/">FORUM</a> |
+  <a href="/jquery/">ARTYKUŁY<span class="glyphicon glyphicon-plus"/> </a>
+</nav>
                 {% block content %} {% endblock %}
             </div>
         </div>

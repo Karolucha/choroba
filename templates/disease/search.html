@@ -4,10 +4,27 @@
 <link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
 
 {% block title %}Wyszukiwarka{% endblock %}
+
+
+{% block left-content %}
+<ul>
+    {% for disease in diseases_list %}
+        <div class="description_disease_short">
+        <li>
+        <a href="/disease/{{disease.id}}">
+            {{ disease.name|upper }}
+        </a>
+        </li>
+        </div>
+
+    {% endfor %}
+</ul>
+{% endblock %}
 {% block content %}
 <p>Wyszukaj interesującej dolegliwości</p>{% csrf_token %}
 <form action="{% url 'portal.views.search_disease' %}" method="POST">
-<input type="text" id="last_name_searchbox" class="name_searchbox" value=""/>
+    {% csrf_token %}
+<input type="text" id="last_name_searchbox" name="last_name_searchbox" class="name_searchbox" value=""/>
 <input type="submit" id="submit_searchbox" class="btn btn-success" name="search_disease" value="Szukaj"/>
 </form>
 <p>Ostatnio omawianie:</p>

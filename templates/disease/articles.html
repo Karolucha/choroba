@@ -3,17 +3,24 @@
 
 
 {% block title %}Artykuł{% endblock %}
-{% block content %}
+{% block left-content %} Ostatnie artykuły
 <h2>Artykuły</h2>
 {% for article in articles %}
+<div class="article_left">{{ article.date_publication }}
 <p><strong>
     <a href="/article/{{article.id}}">
         {{ article.name }}
     </a>
-</strong></p>
-<div id="description_disease_short">
-    {{ article.description|truncatewords:"3" }}
+</strong>
+</p>
+    </div>
+<div class="description_disease_short">
+    {{ article.description|truncatewords:"10" }}... WIĘCEJ
 </div>
 {% endfor %}
+{% endblock %}
+{% block content %}
+
+
 
 {% endblock %}
