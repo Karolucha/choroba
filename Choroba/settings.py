@@ -67,6 +67,12 @@ MONGODB_DATABASES = {
     'default': {'name': 'django_mongoengine'}
 }
 #DJANGO_MONGOENGINE_OVERRIDE_ADMIN = True
+DATABASES = {
+    'default': {
+        'ENGINE': 'django_mongodb_engine',
+        'NAME': 'misiowa',
+    },
+}
 
 
 # DATABASES = {

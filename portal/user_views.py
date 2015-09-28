@@ -5,7 +5,7 @@ from django.http import Http404
 from django.contrib.auth import authenticate, login, logout
 from django.template import RequestContext
 import mongoengine
-mongoengine.connect('misiowa')
+#mongoengine.connect('misiowa')
 
 def logging(request): 
     username = request.POST['username']
