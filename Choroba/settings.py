@@ -43,7 +43,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'portal',
-    'djangular'
+    'djangular',
+    'mongoengine.django.mongo_auth',
+    
 )
 
 MIDDLEWARE_CLASSES = (
@@ -62,18 +64,19 @@ ROOT_URLCONF = 'Choroba.urls'
 WSGI_APPLICATION = 'Choroba.wsgi.application'
 # = 'mongo_auth.MongoUser'
 
-# MongoDB settings
-MONGODB_DATABASES = {
-    'default': {'name': 'django_mongoengine'}
-}
+# # MongoDB settings
+# MONGODB_DATABASES = {
+#     'default': {'name': 'django_mongoengine'}
+# }
 #DJANGO_MONGOENGINE_OVERRIDE_ADMIN = True
 DATABASES = {
     'default': {
-        'ENGINE': 'django_mongodb_engine',
+        'ENGINE':'',
         'NAME': 'misiowa',
     },
 }
-
+AUTH_USER_MODEL = 'mongo_auth.MongoUser'
+MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
 
 # DATABASES = {
 #     'default': {'ENGINE': 'django.db.backends.dummy'}
@@ -87,7 +90,7 @@ DATABASES = {
 #         'NAME': 'misiowa'
 #     }
 # }
-import mongoengine
+# import mongoengine
 
 # DATABASES = {
 #     'default': {
