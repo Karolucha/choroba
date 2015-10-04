@@ -6,4 +6,22 @@
 {% block title %}Wyszukiwarka{% endblock %}
 {% block content %}
 KONTO
+<nav>
+  <a href="/html/">Moja aktywność</a> |
+  <a href="/css/">Znajomi</a> |
+  <a href="/js/">Moje dane</a> |
+    <a href="/js/">Moje komentarze</a> |
+    <a href="/js/">Zgłoś dolegliwość</a> |
+    <a href="/js/">Dodaj artykuł</a> |
+  <a href="/jquery/">Moje artykuły<span class="glyphicon glyphicon-plus"/> </a>
+</nav>
+
+
+
+{% endblock %}
+{% block left-content %} Aktywność Twoich znajomych
+<h2>Znajomi</h2>
+{% for article in articles %}
+
+{% endfor %}
 {% endblock %}

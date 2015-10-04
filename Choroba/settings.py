@@ -45,7 +45,7 @@ INSTALLED_APPS = (
     'portal',
     'djangular',
     'mongoengine.django.mongo_auth',
-    
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -75,6 +75,7 @@ DATABASES = {
         'NAME': 'misiowa',
     },
 }
+SESSION_ENGINE = 'mongoengine.django.sessions' # optional
 AUTH_USER_MODEL = 'mongo_auth.MongoUser'
 MONGOENGINE_USER_DOCUMENT = 'mongoengine.django.auth.User'
 

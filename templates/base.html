@@ -8,14 +8,14 @@
 <link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'styles/site.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap.css' %}"/>
+<script src="{% static 'scripts/angular.js' %}"></script>
 
-</head>
-<body id="body" ng-controller="DiseaseListCtrl">
 
 <script src="{% static 'js/django-angular.js' %}"></script>
 <script src="{% static 'js/diseasecontroller.js' %}"></script>
 
-
+</head>
+<body id="body">
 
 <div class="page">
 
@@ -52,7 +52,7 @@
                 <h1 id="header_text" style="text-align:center">{% block header %}Hipochondryk{% endblock %}</h1>
             </div>
 
-        </div>
+
 <div class="down-header" >
                         <nav>
                             <a style="color:#D41B56 !important" href="/search_disease/" class="top_menu_button">WYSZUKAJ TEMAT</a>
@@ -62,16 +62,10 @@
              {% endif %}
         </nav>
 </div>
-        <div class="content">
+                    </div>
+        <div class="content"  ng-controller="DiseaseListCtrl">
             <div id="content">
-
-                <nav>
-  <a href="/html/">OPIS</a> |
-  <a href="/css/">PORADY</a> |
-  <a href="/js/">FORUM</a> |
-  <a href="/jquery/">ARTYKUŁY<span class="glyphicon glyphicon-plus"/> </a>
-</nav>
-                {% block content %} {% endblock %}
+      {% block content %} {% endblock %}
             </div>
         </div>
         <div class="footer">

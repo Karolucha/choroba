@@ -6,14 +6,18 @@ from django.contrib.auth import authenticate, login, logout
 from django.template import RequestContext
 import mongoengine
 #mongoengine.connect('misiowa')
+from mongoengine.django.auth import User
 
 def logging(request): 
     username = request.POST['username']
     password = request.POST['password']
+
+    User.create_user(username=request.POST['username'], email='random3@pi.pl', password=request.POST['password'])
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
             login(request, user)
+            print("Logged as user: "+str(user))
             return redirect(request.META['HTTP_REFERER'], context_instance=RequestContext(request))
         else:
             pass
@@ -21,7 +25,7 @@ def logging(request):
     else:
         pass
         # Return an 'invalid login' error message.
-        
+    print("Logged as user: "+str(user))
     return redirect(request.META['HTTP_REFERER'], context_instance=RequestContext(request))
 
 def logouting(request):
