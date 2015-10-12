@@ -21,7 +21,8 @@
 </ul>
 {% endblock %}
 {% block content %}
-<p>Wyszukaj interesującej dolegliwości</p>{% csrf_token %}
+<p>Wyszukaj interesującej dolegliwości</p>
+<button class="btn" ng-click="ssave()">TU GUZIK</button>
 <form action="{% url 'portal.views.search_disease' %}" method="POST">
     {% csrf_token %}
 <input type="text" id="last_name_searchbox" name="last_name_searchbox" class="name_searchbox" value=""/>

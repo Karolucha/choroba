@@ -4,24 +4,48 @@
 <link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
 
 {% block title %}Wyszukiwarka{% endblock %}
-{% block content %}
-KONTO
-<nav>
-  <a href="/html/">Moja aktywność</a> |
-  <a href="/css/">Znajomi</a> |
-  <a href="/js/">Moje dane</a> |
-    <a href="/js/">Moje komentarze</a> |
-    <a href="/js/">Zgłoś dolegliwość</a> |
-    <a href="/js/">Dodaj artykuł</a> |
-  <a href="/jquery/">Moje artykuły<span class="glyphicon glyphicon-plus"/> </a>
-</nav>
-
-
-
-{% endblock %}
 {% block left-content %} Aktywność Twoich znajomych
 <h2>Znajomi</h2>
 {% for article in articles %}
 
 {% endfor %}
+{% endblock %}
+{% block content %}
+
+<div style="margin-top:5%"></div>
+<nav>
+  <a href="#sec1">Moja aktywność</a> |
+  <a href="#sec1">Znajomi</a> |
+  <a href="#personal">Moje dane</a> |
+    <a href="#commentaries">Moje komentarze</a> |
+    <a href="/js/">Zgłoś dolegliwość</a> |
+    <a href="/js/">Dodaj artykuł</a> |
+  <a href="/jquery/">Moje artykuły </a>
+</nav>
+<h2 id="commentaries">To Twoje komentarze:</h2>
+ {% if    user.comments %}
+ {% for comment in user.comments %}
+        <div class="comment">
+            <img src="../static/images/landscape.png" class="image_little_profile"/>
+            <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
+            <p class="comment_dsc">{{ comment.description }}</p>
+        </div>
+    {% endfor %}
+{% else %}
+<p>Jeszcze nie dodałeś komentarzy!</p>
+{% endif %}
+<div id="jeden">1</div>
+
+<h2 id="personal">To Twoje dane osobowe:</h2>
+<table>
+    <tr><td>Imię </td><td><input type="text" name="fname" value="{{ user.username }}" style="margin-left:5%;border:solid green" > </td></tr>
+    <tr><td>Nazwisko </td><td> <input type="text" name="fname" value="{{ user.surname }}" style="margin-left:5%;border:solid green" ></td></tr>
+    <tr><td>E-mail</td><td> <input type="text" name="fname" value="{{ user.email }}" style="margin-left:5%;border:solid green" ></td></tr>
+    <tr><td>Data urodzenia</td><td> <input type="text" name="fname" value="{{ user.username }}" style="margin-left:5%;border:solid green" ></td></tr>
+    <tr><td>Liczba prowadzonych dyskusji</td><td> <input type="text" name="fname" value="{{ user.discusion_present_count }}" style="margin-left:5%;border:solid green" ></td></tr>
+    <tr><td>Liczba dodanych chorób</td><td> <input type="text" name="fname" value="{{ user.disease_added_count }}" style="margin-left:5%;border:solid green" ></td></tr>
+   <tr><td>Liczba przyznanych punktów</td><td><input type="text" name="fname" value="{{ user.point }}" style="margin-left:5%;border:solid green" ></td></tr>
+    <tr><td>Liczba dodanych komentarzy</td><td> <input type="text" name="fname" value="{{ user.comment_count }}" style="margin-left:5%;border:solid green" ></td></tr>
+    <tr><td>O mnie</td><td><input type="text" name="fname" value="{{ user.note }}" style="margin-left:5%;border:solid green" ></td></tr>
+</table>
 {% endblock %}

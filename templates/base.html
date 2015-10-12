@@ -9,13 +9,13 @@
 <link rel="stylesheet" type="text/css" href="{% static 'styles/site.css' %}"/>
 <link rel="stylesheet" type="text/css" href="{% static 'styles/bootstrap.css' %}"/>
 <script src="{% static 'scripts/angular.js' %}"></script>
-
+<script  src="{% static 'scripts/jquery-1.10.2.min.js' %}"></script>
 
 <script src="{% static 'js/django-angular.js' %}"></script>
 <script src="{% static 'js/diseasecontroller.js' %}"></script>
 
 </head>
-<body id="body">
+<body id="body"  ng-controller="DiseaseListCtrl">
 
 <div class="page">
 
@@ -29,7 +29,7 @@
             <div class="decent_background" id="header">	<div id="logging">
 		{% if user.is_authenticated %}
 		<h2 id="user_welcome">Witaj, {{user.username}}!</h2>
-		  <a id="logout_button" href="{% url 'portal.user_views.logouting' %}">Wyloguj się</a>
+	  <a id="logout_button" href="{% url 'portal.user_views.logouting' %}">Wyloguj się</a>
 		{% else %}
 		<form method="post" action="{% url 'portal.user_views.logging' %}">
 			{% csrf_token %}
@@ -58,18 +58,22 @@
                             <a style="color:#D41B56 !important" href="/search_disease/" class="top_menu_button">WYSZUKAJ TEMAT</a>
             <a style="color:#2E8B57 !important" href="/articles" class="top_menu_button">ARTYKUŁY</a>
            {% if user.is_authenticated %}
-           <a style="color:#FF2400 !important" href="/account" class="top_menu_button">MOJE KONTO</a>
+           <a style="color:#FF2400 !important" href="/account/{{user.id}}" class="top_menu_button">MOJE KONTO</a>
              {% endif %}
         </nav>
 </div>
                     </div>
-        <div class="content"  ng-controller="DiseaseListCtrl">
+        <div class="content" >
             <div id="content">
       {% block content %} {% endblock %}
             </div>
         </div>
         <div class="footer">
+            <nav>
+                <a style="color:#D41B56 !important" href="/search_disease/" class="top_menu_button">Warunki Portalu</a>
+                <a style="color:#D41B56 !important" href="/search_disease/" class="top_menu_button">Kontakt</a>
 
+            </nav>
         </div>
     </div>
 </div>

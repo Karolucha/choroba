@@ -26,7 +26,8 @@ class UserRoles(Document):
     name = StringField()
     description = StringField(null=True)
 
-class MyUser(User, Document):
+class MyUser(Document):
+    user =ReferenceField(User)
     birthdate = DateTimeField(null=True)
     sex = StringField(max_length=1, null=True)
     note = StringField(max_length=500, null=True)

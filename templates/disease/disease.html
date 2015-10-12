@@ -34,10 +34,12 @@ FORUM
     {% endfor %}
 </div>
 <div id="add_my_comment">
-    <form>
-    <textarea class="textarea_comment">A ja w czasie {{disease.name}} ...</textarea>
+    <form method="POST" action="{% url 'portal.views.add_comment' %}">{% csrf_token %}
+        <input type="hidden" name="disease_id" value="{{ disease.id }}">
+    <textarea class="textarea_comment" name="comment_to_add">A ja w czasie {{disease.name}} ...</textarea>
     <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Dodaj komentarz"/>
     </form>
+
 </div>
 
 {% endblock %}

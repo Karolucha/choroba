@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+<link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
+
+{% block title %}Wyszukiwarka{% endblock %}
+{% block left-content %} Aktywność Twoich znajomych
+<h2>Znajomi</h2>
+{% for article in articles %}
+
+{% endfor %}
+{% endblock %}
+{% block content %}
+
+
+  <h1>Create an account</h1>
+{% if 'wrong_password' in errors %}
+<h2 class="error">Hasła nie pasują do siebie</h2>
+{% endif %}
+{% if 'empty_field' in errors %}
+<h2 class="error">Wypełnij wszystkie pola</h2>
+{% endif %}
+  <form action="{% url 'portal.user_views.register' %}" method="post">
+	{% csrf_token %}
+	<table>
+	<tr>
+		<td>Login:</td> <td><input id="username"
+			type="text" name="username" maxlength="30" size="17" /></td>
+	</tr>
+	<tr>
+		<td>Hasło:</td> <td><input type="password"
+			name="password" id="password" size="17" />
+	</tr>
+		<tr>
+		<td>Powtórz hasło:</td> <td><input type="password"
+			name="confirm_password" id="confirm_password" size="17" /></td>
+	</tr>
+		<tr>
+		<td>Email:</td> <td><input type="email"
+			name="email" id="email" size="30" /></td>
+	</tr>
+	</table>
+	<p>
+		<input type="submit" value="Create the account">
+	</p>
+</form>{% endblock %}
