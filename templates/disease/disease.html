@@ -17,12 +17,12 @@
 </ul>
 {% endblock %}
 {% block content %}
-
-FORUM
+<div style="margin-top:50px;">FORUM</div><hr>
 <h3>{{ disease.name|upper }}</h3>
-<h5>Opis:</h5>
-<div style="border:1px solid #FF0080; margin:10px;">
-<p> {{ disease.description }}</p>
+<h5>Opis zjawiska:</h5>
+<div style="border:1px solid #730029; margin:10px;width:50%">
+<div id="dsc_disease_short"  style="margin:10px;"> {{ disease.description|truncatewords:"3"}}<button class="glyphicon glyphicon-plus" ng-click="more_dsc()"/></div>
+<div id="dsc_disease"  style="margin:10px;"> {{ disease.description }}<button style="margin-left:20px;" class="glyphicon glyphicon-minus" ng-click="less_dsc()"/></div>
 </div>
 <div id="commentaries">
     {% for comment in disease.comments %}

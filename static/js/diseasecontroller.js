@@ -6,16 +6,19 @@ var diseaseApp = angular.module('diseaseApp', []).config(function($interpolatePr
 });
 
 diseaseApp.controller('DiseaseListCtrl', function ($scope) {
-$scope.hello="OOOOOOOOURANGUTAN";
-  $scope.phones = [
-    {'name': 'Nexus S',
-     'snippet': 'Fast just got faster with Nexus S.'},
-    {'name': 'Motorola XOOM™ with Wi-Fi',
-     'snippet': 'The Next, Next Generation tablet.'},
-    {'name': 'MOTOROLA XOOM™',
-     'snippet': 'The Next, Next Generation tablet.'}
-  ];
-  console.log($scope.phones);
+
+  $('#dsc_disease_short').hide();
+      $scope.more_dsc = function(){
+        console.log("na ja");
+        $('#dsc_disease_short').hide();
+        $('#dsc_disease').show();
+    }
+
+    $scope.less_dsc = function(){
+        console.log("na ja");
+        $('#dsc_disease_short').show();
+        $('#dsc_disease').hide();
+    }
     $scope.save_new_comment = function (text, userId, diseaseId) {
          console.log("guten tag");
          var commentDict={};
@@ -39,6 +42,5 @@ $scope.hello="OOOOOOOOURANGUTAN";
         console.log("na ja");
         $('#jeden').val('lala');
     }
-
 
 });

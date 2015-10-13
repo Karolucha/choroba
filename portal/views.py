@@ -48,8 +48,9 @@ def add_comment(request):
         import pprint
         pprint.pprint(request.POST)
         new_comment = Comment(date_publication=datetime.datetime.now(), description=request.POST['comment_to_add'])
-        new_comment.user = User.objects.get(id=request.user.id)
+        user_id = request.user.id
         print(request.user.id)
+        new_comment.user = MyUser.objects.get(user=User.objects.get(id=user_id))
         print(new_comment.user)
         new_comment.save()
         disease_to_comment = Disease.objects.get(id=request.POST['disease_id'])
