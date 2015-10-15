@@ -3,12 +3,19 @@
 {% load staticfiles %}
 <link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
 
-{% block title %}Wyszukiwarka{% endblock %}
+{% block title %}HipoProfil{% endblock %}
 {% block left-content %} Aktywność Twoich znajomych
 <h2>Znajomi</h2>
-{% for article in articles %}
+{% for user in my_user.friends %}
 
+{% empty %}
+Skorzystaj z filtra i zaproś przyjaciół!
 {% endfor %}
+ <form method="POST" action="{% url 'portal.views.search_friend' %}">{% csrf_token %}
+        <input type="hidden" name="disease_id" value="{{ disease.id }}">
+    <textarea class="textarea_comment" name="comment_to_add">A ja w czasie {{disease.name}} ...</textarea>
+    <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Dodaj komentarz"/>
+    </form>
 {% endblock %}
 {% block content %}
 
@@ -37,15 +44,19 @@
 <div id="jeden">1</div>
 
 <h2 id="personal">To Twoje dane osobowe:</h2>
+    <form method="POST" action="{% url 'portal.user_views.account' %}">{% csrf_token %}
 <table>
-    <tr><td>Imię </td><td><input type="text" name="fname" value="{{ user.username }}" style="margin-left:5%;border:solid green" > </td></tr>
-    <tr><td>Nazwisko </td><td> <input type="text" name="fname" value="{{ user.surname }}" style="margin-left:5%;border:solid green" ></td></tr>
-    <tr><td>E-mail</td><td> <input type="text" name="fname" value="{{ user.email }}" style="margin-left:5%;border:solid green" ></td></tr>
-    <tr><td>Data urodzenia</td><td> <input type="text" name="fname" value="{{ user.username }}" style="margin-left:5%;border:solid green" ></td></tr>
-    <tr><td>Liczba prowadzonych dyskusji</td><td> <input type="text" name="fname" value="{{ user.discusion_present_count }}" style="margin-left:5%;border:solid green" ></td></tr>
-    <tr><td>Liczba dodanych chorób</td><td> <input type="text" name="fname" value="{{ user.disease_added_count }}" style="margin-left:5%;border:solid green" ></td></tr>
-   <tr><td>Liczba przyznanych punktów</td><td><input type="text" name="fname" value="{{ user.point }}" style="margin-left:5%;border:solid green" ></td></tr>
-    <tr><td>Liczba dodanych komentarzy</td><td> <input type="text" name="fname" value="{{ user.comment_count }}" style="margin-left:5%;border:solid green" ></td></tr>
-    <tr><td>O mnie</td><td><input type="text" name="fname" value="{{ user.note }}" style="margin-left:5%;border:solid green" ></td></tr>
+    <tr><td>Imię </td><td><input type="text" name="name" value="{{ my_user.user.username }}" style="margin-left:5%;border:solid green" > </td></tr>
+    <tr><td>Nazwisko </td><td> <input type="text" name="surname" value="{{ my_user.user.surname }}" style="margin-left:5%;border:solid green" ></td></tr>
+    <tr><td>E-mail</td><td> <input type="text" name="e-mail" value="{{ my_user.user.email }}" style="margin-left:5%;border:solid green" ></td></tr>
+    <tr><td>Data urodzenia</td><td> <input type="date" name="birthday" value="{{ my_user.birthdate }}" style="margin-left:5%;border:solid green" ></td></tr>
+    <tr><td>Liczba prowadzonych dyskusji</td><td> <input type="text" name="fname" value="{{ my_user.discusion_present_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
+    <tr><td>Liczba dodanych chorób</td><td> <input type="text" name="fname" value="{{ my_user.disease_added_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
+   <tr><td>Liczba przyznanych punktów</td><td><input type="text" name="fname" value="{{ my_user.point }}" style="margin-left:5%;border:solid green" readonly></td></tr>
+    <tr><td>Liczba dodanych komentarzy</td><td> <input type="text" name="fname" value="{{ my_user.comment_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
+    <tr><td>O mnie</td><td><input type="text" name="about" value="{{ my_user.note }}" style="margin-left:5%;border:solid green" ></td></tr>
 </table>
+    <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Zatwierdź"/>
+    </form>
+
 {% endblock %}

@@ -11,7 +11,10 @@ import mongoengine
 #mongoengine.connect('misiowa')
 from mongoengine.django.auth import User
 import pprint
-def logging(request): 
+
+
+
+def logging(request):
     username = request.POST['username']
     password = request.POST['password']
 
@@ -47,9 +50,9 @@ def register(request):
     #     return render_to_response('profile/register.html', {'errors': errors}, RequestContext(request))
     # else:
     User.create_user(username=request.POST['username'], email=request.POST['email'], password=request.POST['password'])
-    user=authenticate(username=request.POST['username'], password=request.POST['password'])
+    user = authenticate(username=request.POST['username'], password=request.POST['password'])
     my_user = MyUser()
-    my_user.user=user
+    my_user.user = user
     my_user.save()
     login(request, user)
     users_from_database = User.objects.all()
@@ -71,15 +74,18 @@ def register(request):
 #         form = RegisterForm()
 #     return render_to_response('profile/register.html', {'form': form},RequestContext(request))
 @login_required
-def account(request, user_id):
-    # example_insert_user()
-    #
-
-    #pprint.pprint(request.POST)
-   # user_from_database = MyUser.objects.get(id=user_id)
-    users_from_database = User.objects.all()
-  #  user = User.objects.get(id=user_id)
-   # except Exception as e:
-    #    raise Http404
-
-    return render_to_response('profile/account.html', {'users': users_from_database}, RequestContext(request))
+def account(request):
+      if (request.POST):
+        user = User.objects.get(id=request.user.id)
+        my_user = MyUser.objects.get(user=user)
+        if(request.POST['surname']):
+            my_user.user.surname=request.POST['surname']
+        # if(request.POST['birthday']):
+        #     my_user.birthdate=request.POST['birthday']
+        my_user.save()
+        return render_to_response('profile/account.html',{'my_user': my_user}, RequestContext(request))
+      else:
+        user = User.objects.get(id=request.user.id)
+        my_user = MyUser.objects.get(user=user)
+        all_users = User.objects.all()
+        return render_to_response('profile/account.html', {'my_user': my_user, 'all_users': all_users}, RequestContext(request))
