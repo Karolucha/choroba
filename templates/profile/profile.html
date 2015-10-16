@@ -6,12 +6,13 @@
 {% block title %}HipoProfil{% endblock %}
 {% block left-content %} Aktywność Twoich znajomych
 <h2>Znajomi</h2>
-{% for user in all_users %}<div class="all_user">
+{% for user in all_users %}
+<div class="all_user">
     {{ user.user.username }}
     <a href="/profile/{{user.user.id}}">
         Profil
     </a>
-    <button class="btn btn-sucess" ng-click="add_friend('{{user.user.id}}')" id="{{user.user.id}}"><span class="glyphicon glyphicon-plus"/></button>
+    <button class="btn btn-sucess" ng-click="add_friend()" id="{{user.user.id}}"><span class="glyphicon glyphicon-plus"/></button>
 </div>
 
 {% empty %}
@@ -26,31 +27,8 @@ Skorzystaj z filtra i zaproś przyjaciół!
 {% block content %}
 
 <div style="margin-top:5%"></div>
-<nav>
-  <a href="#sec1">Moja aktywność</a> |
-  <a href="#sec1">Znajomi</a> |
-  <a href="#personal">Moje dane</a> |
-    <a href="#commentaries">Moje komentarze</a> |
-    <a href="/js/">Zgłoś dolegliwość</a> |
-    <a href="/js/">Dodaj artykuł</a> |
-  <a href="/jquery/">Moje artykuły </a>
-</nav>
-<h2 id="commentaries">To Twoje komentarze:</h2>
- {% if    user.comments %}
- {% for comment in user.comments %}
-        <div class="comment">
-            <img src="../static/images/landscape.png" class="image_little_profile"/>
-            <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
-            <p class="comment_dsc">{{ comment.description }}</p>
-        </div>
-    {% endfor %}
-{% else %}
-<p>Jeszcze nie dodałeś komentarzy!</p>
-{% endif %}
-<div id="jeden">1</div>
+<h2 id="personal">Użytkownik:</h2>
 
-<h2 id="personal">To Twoje dane osobowe:</h2>
-    <form method="POST" action="{% url 'portal.user_views.account' %}">{% csrf_token %}
 <table>
     <tr><td>Imię </td><td><input type="text" name="name" value="{{ my_user.user.username }}" style="margin-left:5%;border:solid green" > </td></tr>
     <tr><td>Nazwisko </td><td> <input type="text" name="surname" value="{{ my_user.user.surname }}" style="margin-left:5%;border:solid green" ></td></tr>
@@ -62,7 +40,6 @@ Skorzystaj z filtra i zaproś przyjaciół!
     <tr><td>Liczba dodanych komentarzy</td><td> <input type="text" name="fname" value="{{ my_user.comment_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
     <tr><td>O mnie</td><td><input type="text" name="about" value="{{ my_user.note }}" style="margin-left:5%;border:solid green" ></td></tr>
 </table>
-    <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Zatwierdź"/>
-    </form>
+
 
 {% endblock %}

@@ -6,7 +6,7 @@ var diseaseApp = angular.module('diseaseApp', []).config(function($interpolatePr
 });
 
 diseaseApp.controller('DiseaseListCtrl', function ($scope) {
-
+console.log("działa");
   $('#dsc_disease_short').hide();
       $scope.more_dsc = function(){
         console.log("na ja");
@@ -18,6 +18,20 @@ diseaseApp.controller('DiseaseListCtrl', function ($scope) {
         console.log("na ja");
         $('#dsc_disease_short').show();
         $('#dsc_disease').hide();
+    }
+    $scope.add_friend = function(friend_id){
+        console.log("na ja");
+//        $.ajax({
+//            url: '127.0.0.1:8000/add_friend',
+//            type: 'post',
+//            data: {friend_id:friend_id},
+//            success: function(data) {
+//                alert(data);
+//            },
+//            failure: function(data) {
+//                alert('Got an error dude');
+//            }
+//        });
     }
     $scope.save_new_comment = function (text, userId, diseaseId) {
          console.log("guten tag");

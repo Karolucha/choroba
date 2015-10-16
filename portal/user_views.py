@@ -13,6 +13,19 @@ from mongoengine.django.auth import User
 import pprint
 
 
+# def change_profile(request):
+#     if (request.POST):
+#         user=User.objects.get(id=request.user.id)
+#         my_user=MyUser.objects.get(user=user)
+#         if(request.POST['surname']):
+#             my_user.user.surname=request.POST['surname']
+#         # if(request.POST['birthday']):
+#         #     my_user.birthdate=request.POST['birthday']
+#         my_user.save()
+#         return render_to_response('profile/account.html',{'my_user': my_user}, RequestContext(request))
+#     else:
+#         users_from_database = User.objects.all()
+#         return render_to_response('profile/account.html',{'users_from_database': users_from_database}, RequestContext(request))
 
 def logging(request):
     username = request.POST['username']
@@ -39,6 +52,25 @@ def logouting(request):
     # Redirect to a errors page.
     return redirect(request.META['HTTP_REFERER'], context_instance=RequestContext(request))
 
+def add_friend(request, user_id):
+    logout(request)
+    # Redirect to a errors page.
+    return redirect(request.META['HTTP_REFERER'], context_instance=RequestContext(request))
+
+def profile(request, user_id):
+    user = User.objects.get(id=request.user.id)
+    my_user = MyUser.objects.get(user=user)
+    friend_user = my_user.friends
+    if (request.POST):
+
+        # if(request.POST['surname']):
+        #     my_user.user.surname=request.POST['surname']
+        # # if(request.POST['birthday']):
+        # #     my_user.birthdate=request.POST['birthday']
+       # my_user.save()
+        return render_to_response('profile/account.html',{'my_user': my_user,'friend_user': friend_user}, RequestContext(request))
+    else:
+        return render_to_response('profile/account.html', {'my_user': my_user, 'friend_users': friend_user}, RequestContext(request))
 
 def register(request):
     # errors = []
@@ -57,25 +89,16 @@ def register(request):
     login(request, user)
     users_from_database = User.objects.all()
     return render_to_response('profile/account.html',{'users': users_from_database}, RequestContext(request))
-# def register(request):
-#     users_from_database = User.objects.all()
-#     if request.method == 'POST':
-#         form = RegisterForm(request.POST)
-#         if form.is_valid():
-#             cd = form.cleaned_data
-#             # send_mail(
-#             #     cd['subject'],
-#             #     cd['message'],
-#             #     cd.get('email', 'noreply@example.com'),
-#             #     ['siteowner@example.com'],
-#             # )
-#             return render_to_response('profile/account.html', {'users': users_from_database}, RequestContext(request))
-#     else:
-#         form = RegisterForm()
-#     return render_to_response('profile/register.html', {'form': form},RequestContext(request))
+
+def get_all_users():
+    all_users = MyUser.objects.all()
+    return all_users
 @login_required
 def account(request):
-      if (request.POST):
+    all_users = MyUser.objects.all()
+    print(all_users)
+    print("tu zyja userzy")
+    if (request.POST):
         user = User.objects.get(id=request.user.id)
         my_user = MyUser.objects.get(user=user)
         if(request.POST['surname']):
@@ -83,9 +106,8 @@ def account(request):
         # if(request.POST['birthday']):
         #     my_user.birthdate=request.POST['birthday']
         my_user.save()
-        return render_to_response('profile/account.html',{'my_user': my_user}, RequestContext(request))
-      else:
+        return render_to_response('profile/account.html',{'my_user': my_user,'all_users': all_users}, RequestContext(request))
+    else:
         user = User.objects.get(id=request.user.id)
         my_user = MyUser.objects.get(user=user)
-        all_users = User.objects.all()
         return render_to_response('profile/account.html', {'my_user': my_user, 'all_users': all_users}, RequestContext(request))

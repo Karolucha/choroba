@@ -4,42 +4,41 @@
 
 {% block title %}{{disease.name}}{% endblock %}
 {% block left-content %}
-<h4>Artykuły w dziedzinie {{ disease.name}}</h4>
-<ul>
-{% for article in disease.articles %}
-<li>    <div id="description_disease_short">
-        <a href="/article/{{article.id}}" style="margin-left:10px;">
-            {{ article.description|truncatewords:"3" }}
-        </a>
-    </div>
-</li>
-{% endfor %}
-</ul>
+    <h4>Artykuły w dziedzinie {{ disease.name}}</h4>
+    <ul>
+    {% for article in disease.articles %}
+        <li>
+            <div id="description_disease_short">
+                <a href="/article/{{article.id}}" style="margin-left:10px;">
+                    {{ article.description|truncatewords:"3" }}
+                </a>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
 {% endblock %}
 {% block content %}
-<div style="margin-top:50px;">FORUM</div><hr>
-<h3>{{ disease.name|upper }}</h3>
-<h5>Opis zjawiska:</h5>
-<div style="border:1px solid #730029; margin:10px;width:50%">
-<div id="dsc_disease_short"  style="margin:10px;"> {{ disease.description|truncatewords:"3"}}<button class="glyphicon glyphicon-plus" ng-click="more_dsc()"/></div>
-<div id="dsc_disease"  style="margin:10px;"> {{ disease.description }}<button style="margin-left:20px;" class="glyphicon glyphicon-minus" ng-click="less_dsc()"/></div>
-</div>
-<div id="commentaries">
-    {% for comment in disease.comments %}
-        <div class="comment">
-            <img src="../static/images/landscape.png" class="image_little_profile"/>
-            <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
-            <p class="comment_dsc">{{ comment.description }}</p>
-        </div>
-    {% endfor %}
-</div>
-<div id="add_my_comment">
-    <form method="POST" action="{% url 'portal.views.add_comment' %}">{% csrf_token %}
-        <input type="hidden" name="disease_id" value="{{ disease.id }}">
-    <textarea class="textarea_comment" name="comment_to_add">A ja w czasie {{disease.name}} ...</textarea>
-    <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Dodaj komentarz"/>
-    </form>
-
-</div>
-
+    <div style="margin-top:50px;">FORUM</div><hr>
+    <h3>{{ disease.name|upper }}</h3>
+    <h5>Opis zjawiska:</h5>
+    <div style="border:1px solid #730029; margin:10px;width:50%">
+    <div id="dsc_disease_short"  style="margin:10px;"> {{ disease.description|truncatewords:"3"}}<button class="glyphicon glyphicon-plus" ng-click="more_dsc()"/></div>
+    <div id="dsc_disease"  style="margin:10px;"> {{ disease.description }}<button style="margin-left:20px;" class="glyphicon glyphicon-minus" ng-click="less_dsc()"/></div>
+    </div>
+    <div id="commentaries">
+        {% for comment in disease.comments %}
+            <div class="comment">
+                <img src="../static/images/landscape.png" class="image_little_profile"/>
+                <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
+                <p class="comment_dsc">{{ comment.description }}</p>
+            </div>
+        {% endfor %}
+    </div>
+    <div id="add_my_comment">
+        <form method="POST" action="{% url 'portal.views.add_comment' %}">{% csrf_token %}
+            <input type="hidden" name="disease_id" value="{{ disease.id }}">
+            <textarea class="textarea_comment" name="comment_to_add">A ja w czasie {{disease.name}} ...</textarea>
+            <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Dodaj komentarz"/>
+        </form>
+    </div>
 {% endblock %}
