@@ -5,23 +5,31 @@
 
 {% block title %}HipoProfil{% endblock %}
 {% block left-content %} Aktywność Twoich znajomych
+<div class="container">
 <h2>Znajomi</h2>
-{% for user in all_users %}<div class="all_user">
-    {{ user.user.username }}
-    <a href="/profile/{{user.user.id}}">
-        Profil
-    </a>
-    <button class="btn btn-sucess" ng-click="add_friend('{{user.user.id}}')" id="{{user.user.id}}"><span class="glyphicon glyphicon-plus"/></button>
+{% for user in all_users %}
+<div class="row">
+    <div class="col-xs-3">   {{ user.user.username }} </div>
+    <div class="col-xs-2"></div>
+    <div class="col-xs-3">
+        <a href="/profile/{{user.user.id}}">
+            Profil
+        </a>
+    </div>
+    <div class="col-xs-2">
+        <button class="btn btn-sucess" ng-click="add_friend('{{user.user.id}}')" id="{{user.user.id}}"><span class="glyphicon glyphicon-plus"/></button>
+    </div>
 </div>
 
-{% empty %}
-Skorzystaj z filtra i zaproś przyjaciół!
 {% endfor %}
-
+    Skorzystaj z filtra i zaproś przyjaciół!
+<div class=row>
         <input type="hidden" name="disease_id" value="{{ disease.id }}"><br/>
-    <textarea name="find_user" class="find_user"></textarea><br/>
-    <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Dodaj komentarz"/>
-
+    <div class="col-xs-4">
+        <textarea name="find_user" class="find_user"></textarea><br/>
+    </div>
+</div>
+</div>
 {% endblock %}
 {% block content %}
 

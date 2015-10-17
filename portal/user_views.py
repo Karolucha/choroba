@@ -60,7 +60,7 @@ def add_friend(request, user_id):
 def profile(request, user_id):
     user = User.objects.get(id=request.user.id)
     my_user = MyUser.objects.get(user=user)
-    friend_user = my_user.friends
+
     if (request.POST):
 
         # if(request.POST['surname']):
@@ -68,9 +68,9 @@ def profile(request, user_id):
         # # if(request.POST['birthday']):
         # #     my_user.birthdate=request.POST['birthday']
        # my_user.save()
-        return render_to_response('profile/account.html',{'my_user': my_user,'friend_user': friend_user}, RequestContext(request))
+        return render_to_response('profile/profile.html', {'my_user': my_user}, RequestContext(request))
     else:
-        return render_to_response('profile/account.html', {'my_user': my_user, 'friend_users': friend_user}, RequestContext(request))
+        return render_to_response('profile/profile.html', {'my_user': my_user}, RequestContext(request))
 
 def register(request):
     # errors = []
