@@ -18,34 +18,55 @@
 </head>
 <body id="body"  ng-controller="DiseaseListCtrl">
 
-<div class="page">
+<div class="page container">
     <div class="left-bar">
         <div class="menu" style="margin-top:80px; margin-left:10%"; >
             {% block left-content %} {% endblock %}
         </div>
     </div>
+
+
 <div class="right-bar">
     <div class="header">
-        <div class="decent_background" id="header">	<div id="logging">
-		{% if user.is_authenticated %}
-		    <h2 id="user_welcome">Witaj, {{user.username}}!</h2>
-	        <a id="logout_button" href="{% url 'portal.user_views.logouting' %}">Wyloguj się</a>
-		{% else %}
-            <form method="post" action="{% url 'portal.user_views.logging' %}">{% csrf_token %}
-                <p>
-                    <label for="id_username">Username:</label> <input id="id_username" type="text" name="username" maxlength="30" size="17" />
-                </p>
-                <p>
-                    <label for="id_password">Password:</label> <input type="password" name="password" id="id_password" size="17" />
-                </p>
-            <div id="log_button">
-                <input id="login" type="submit" value="Log in" />
-            </div>
-            </form>
-		{% endif %}
-	</div>
+        <div class="row">
+    <div class="col-md-6">
         <h1 id="header_text" style="text-align:center">{% block header %}Hipochondryk{% endblock %}</h1>
     </div>
+
+		{% if user.is_authenticated %}
+            <div class="col-sm-4">
+                <div class="row">
+                    <div class="col-md-2">Witaj, {{user.username}}!</div>
+                    <div class="col-md-2">  <a id="logout_button" href="{% url 'portal.user_views.logouting' %}">Wyloguj się</a></div>
+                    <div class="col-md-8"></div>
+                </div>
+            </div>
+		{% else %}
+
+            <form method="post" action="{% url 'portal.user_views.logging' %}">{% csrf_token %}
+               <div class="col-md-1">
+                <input id="login" class="btn btn-success" type="submit" value="Zaloguj" />
+                </div>
+
+                <div class="col-md-4">
+                    <div class="row">
+                    <div class="col-md-2"> <label for="id_username">Użytkownik:</label></div>
+                    <div class="col-md-2"><input id="id_username" type="text" name="username" maxlength="30" size="17" /></div>
+                    <div class="col-md-8"></div>
+                </div>
+                    <div class="row">
+                    <div class="col-md-2"><label for="id_password">Hasło:</label></div>
+                    <div class="col-md-2"><input type="password" name="password" id="id_password" size="17" /></div>
+                    <div class="col-md-8"></div>
+                </div>
+            </div>
+
+            </form>
+		{% endif %}
+
+
+    </div><!--#ROW -->
+
     <div class="down-header" >
         <nav>
             <a style="color:#D41B56 !important" href="/search_disease/" class="top_menu_button">WYSZUKAJ TEMAT</a>
@@ -54,11 +75,13 @@
                 <a style="color:#FF2400 !important" href="/account/{{user.id}}" class="top_menu_button">MOJE KONTO</a>
             {% endif %}
         </nav>
-    </div>
-</div>
+    </div><!--#DOWN-HEADER -->
+</div><!--#HEADER -->
 <div class="content" >
     <div id="content">
+        <div class="container">
         {% block content %} {% endblock %}
+            </div>
     </div>
 </div>
 <div class="footer">

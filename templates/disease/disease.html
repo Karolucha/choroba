@@ -34,6 +34,16 @@
             </div>
         {% endfor %}
     </div>
+
+
+
+<div id="leave_comment">
+  <ul>
+    <li><a href="#tabs-1">Skomentuj</a></li>
+    <li><a href="#tabs-2">Sprecyzuj przebieg</a></li>
+    <li><a href="#tabs-3">Postaw pytanie</a></li>
+  </ul>
+  <div id="tabs-1">
     <div id="add_my_comment">
         <form method="POST" action="{% url 'portal.views.add_comment' %}">{% csrf_token %}
             <input type="hidden" name="disease_id" value="{{ disease.id }}">
@@ -41,4 +51,77 @@
             <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Dodaj komentarz"/>
         </form>
     </div>
+  </div>
+  <div id="tabs-2">
+              <form method="POST" action="{% url 'portal.views.add_specific_comment' %}">{% csrf_token %}
+        <div class="row">
+            <div class="col-md-4">
+                Czas trwania choroby
+            </div>
+            <div class="col-md-4">
+                <select name="number" id="unit_duration">
+                      <option value="">-- JEDNOSTKA --</option>
+                      <option value="D">Dni</option>
+                      <option value="W">Tygodni</option>
+                      <option value="M">Miesięcy</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <select name="number" id="value_duration"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                Wiek w czasie choroby
+            </div>
+            <div class="col-md-4">
+                <input type="number" name="age" min="1" max="100"/>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+      <div class="row">
+            <div class="col-md-4">
+                Porady/pomogło mi:
+            </div>
+            <div class="col-md-8">
+                <textarea class="specific_comment"></textarea>
+            </div>
+        </div>
+      <div class="row">
+            <div class="col-md-4">
+                Dolegliwości:
+            </div>
+            <div class="col-md-8">
+                <textarea class="specific_comment"></textarea>
+            </div>
+
+        </div>
+      <div class="row">
+            <div class="col-md-4"> Zmiany chorobowe </div>
+            <div class="col-md-4">
+                <input type="file" class="btn btn-primary" value="Załączam zdjęcie"/>
+            </div>
+            <div class="col-md-4"> </div>
+      </div>
+      <div class="row" style="margin:5px"></div>
+      <div class="row">
+            <div class="col-md-4"> </div>
+            <div class="col-md-4">
+                <input style="width:100%" type="submit" class="btn btn-success" value="Prześlij"/>
+            </div>
+            <div class="col-md-4"> </div>
+      </div>
+                          </form>
+  </div>
+  <div id="tabs-3">
+        <form method="POST" action="{% url 'portal.views.add_comment' %}">{% csrf_token %}
+            <input type="hidden" name="disease_id" value="{{ disease.id }}">
+            <textarea class="textarea_comment" name="comment_to_add">Czy w czasie {{disease.name}}   ?</textarea>
+            <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Zadaj pytanie"/>
+        </form>
+
+  </div>
+</div>
+
+
 {% endblock %}

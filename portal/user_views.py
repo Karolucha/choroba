@@ -30,8 +30,12 @@ import pprint
 def logging(request):
     username = request.POST['username']
     password = request.POST['password']
+    print("username")
+    print(username)
+    print("password")
+    print(password)
 
-    User.create_user(username=request.POST['username'], email='random3@pi.pl', password=request.POST['password'])
+ #   User.create_user(username=request.POST['username'], email='random3@pi.pl', password=request.POST['password'])
     user = authenticate(username=username, password=password)
     if user is not None:
         if user.is_active:
@@ -39,12 +43,12 @@ def logging(request):
             print("Logged as user: "+str(user))
             return redirect(request.META['HTTP_REFERER'], context_instance=RequestContext(request))
         else:
-            pass
+            print("cant logged user")
             # Return a 'disabled account' error message
     else:
         pass
         # Return an 'invalid login' error message.
-    print("Logged as user: "+str(user))
+    print("Tried to log as user: "+str(user))
     return redirect(request.META['HTTP_REFERER'], context_instance=RequestContext(request))
 
 def logouting(request):
@@ -81,14 +85,20 @@ def register(request):
     # if(len(errors) != 0):
     #     return render_to_response('profile/register.html', {'errors': errors}, RequestContext(request))
     # else:
-    User.create_user(username=request.POST['username'], email=request.POST['email'], password=request.POST['password'])
-    user = authenticate(username=request.POST['username'], password=request.POST['password'])
-    my_user = MyUser()
-    my_user.user = user
-    my_user.save()
-    login(request, user)
     users_from_database = User.objects.all()
-    return render_to_response('profile/account.html',{'users': users_from_database}, RequestContext(request))
+    if request.POST:
+        User.create_user(username=request.POST['username'], email=request.POST['email'], password=request.POST['password'])
+        user = authenticate(username=request.POST['username'], password=request.POST['password'])
+        my_user = MyUser()
+        my_user.user = user
+        my_user.save()
+        login(request, user)
+
+        return render_to_response('profile/account.html',{'users': users_from_database}, RequestContext(request))
+    else:
+        return render_to_response('profile/register.html',{'users': users_from_database}, RequestContext(request))
+
+
 
 def get_all_users():
     all_users = MyUser.objects.all()
