@@ -7,6 +7,43 @@ var diseaseApp = angular.module('diseaseApp', []).config(function($interpolatePr
 
 diseaseApp.controller('DiseaseListCtrl', function ($scope) {
 console.log("działa");
+
+ var values_duration = {};
+values_duration['D'] = [];
+for (i = 1; i < 31; i++) {
+   values_duration['D'].push(i);
+        }
+values_duration['W'] = ['1', '2', '3', '4'];
+values_duration['M'] = [];
+for (i = 1; i < 13; i++) {
+   values_duration['M'].push(i);
+        }
+values_duration['M'].push('Powyżej roku');
+console.log(values_duration);
+$('#unit_duration').on('change', function() {
+    console.log(values_duration);
+    var carList = document.getElementById("unit_duration");
+    var modelList = document.getElementById("value_duration");
+    var selCar = carList.options[carList.selectedIndex].value;
+    console.log(selCar);
+    while (modelList.options.length) {
+        modelList.remove(0);
+    }
+    var cars = values_duration[selCar];
+    if (cars) {
+        var i;
+        for (i = 0; i < cars.length; i++) {
+            var car = new Option(cars[i], i);
+            modelList.options.add(car);
+        }
+    }
+});
+  $(function() {
+    $( "#leave_comment" ).tabs();
+  });
+if($('#still_disease').prop('checked', true)) {
+
+}
   $('#dsc_disease_short').hide();
       $scope.more_dsc = function(){
         console.log("na ja");

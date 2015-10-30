@@ -36,7 +36,11 @@ Na razie brak znajomych
             </button>
         </div>
         <div class="col-md-4"></div>
-        <div class="col-md-4"><button class="btn btn-success">Dodaj przyjaciela</button></div>
+        <div class="col-md-4">
+            <form method="POST" action="{% url 'portal.user_views.add_friend' user_id=my_user.id %}">{% csrf_token %}
+                <input type="submit" class="btn btn-success">Dodaj przyjaciela</input>
+            </form>
+        </div>
 </div>
 
 <div class=row>

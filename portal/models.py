@@ -3,63 +3,113 @@ from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.contrib.auth.models import User"""
 # Create your models here.
+import datetime
 from mongoengine import *
-
 #from django_mongoengine.auth.models import User
 from mongoengine.django.auth import User
 print(connect('misiowa'))
-
-
-class Choice(EmbeddedDocument):
-    choice_text = StringField(max_length=200)
-    votes = IntField(default=0)
-
-
-class Poll(Document):
-    question = StringField(max_length=200)
-    #pub_date = DateTimeField(help_text='date published')
-    choices = ListField(EmbeddedDocumentField(Choice))
-
 
 
 class UserRoles(Document):
     name = StringField()
     description = StringField(null=True)
 
+
+class Image(Document):
+    date_publication = DateTimeField()
+    img = ImageField()
+    description = StringField(max_length=500, null=True)
+
+
 class MyUser(Document):
-    user =ReferenceField(User)
+    user = ReferenceField(User)
     birthdate = DateTimeField(null=True)
     sex = StringField(max_length=1, null=True)
     note = StringField(max_length=500, null=True)
-    point = IntField(null=True, default=0)
+    point = FloatField(null=True, default=0.0)
     comment_count = IntField(null=True, default=0)
     disease_added_count = IntField(null=True, default=0)
-    discusion_present_count = IntField(null=True, default=0)
-    role_id = ReferenceField(UserRoles)
+    article_added_count = IntField(null=True, default=0)
+    discussion_added_count = IntField(null=True, default=0)
+    forum_present_count = IntField(null=True, default=0)
+    image = ImageField(collection_name="profile")
+    register_date = DateTimeField(default=datetime.datetime.now)
+    images = ListField(ReferenceField(Image))
+
+    roles = ListField(ReferenceField(UserRoles))
+    comments = ListField(ReferenceField('Comment'))
+    articles = ListField(ReferenceField('Article'))
+    diseases = ListField(ReferenceField('Disease'))
     friends = ListField(ReferenceField('self'))
+    IsPublicProp = DictField()
+  #  for prop in ('self').my_metaclass.get_all_field_names():
+  #      IsPublicProp[prop] = False
+
+    def has_perm(self, perm):
+        if perm in self.roles:
+            return True
+
+
+
+class PublicTerms(Document):
+    name = StringField()
+
+
+class Invitation(Document):
+    inviting = ReferenceField(MyUser)
+    invited = ReferenceField(User)
+    discussion = ReferenceField(MyUser, null=True)
+
+
+class CommentCategory(Document):
+    name = StringField()
+
 
 class Comment(Document):
     user = ReferenceField(MyUser)
-    date_publication = DateTimeField()
+    date_publication = DateTimeField(default=datetime.datetime.now)
     name = StringField(max_length=200, null=True)
     description = StringField(max_length=1000)
-    time_duration = StringField(max_length=200, null=True)
+    unit_duration = StringField(max_length=200, null=True)
+    value_duration = StringField(max_length=200, null=True)
+    age = IntField(null=True)
     tips = StringField(max_length=200, null=True)
-    points_tips = FloatField()
-    point_comment = FloatField()
+    points_tips = FloatField(null=True, default=0.0)
+    point_comment = FloatField(null=True, default=0.0)
+    images = ListField(ImageField(collection_name="comment"), null=True)
+    category = ReferenceField(CommentCategory)
+    disease = ReferenceField('Disease', null=True)
 
-class Article(Document):
-    user = ReferenceField(MyUser)
-    date_publication = DateTimeField()
-    name = StringField(max_length=200)
-    description = StringField()
 
-class Disease(Document):
+class Forum(Document):
     name = StringField(max_length=100)
     description = StringField(max_length=1000, null=True)
-    cure = StringField(max_length=1000, null=True)
-    articles = ListField(ReferenceField(Article))
     comments = ListField(ReferenceField(Comment))
+    images = ListField(ImageField(collection_name="forum"))
+    founder = ReferenceField('MyUser')
+    meta = {'allow_inheritance': True}
+
+
+class Disease(Forum):
+    cure = StringField(max_length=1000, null=True)
+    articles = ListField(ReferenceField('Article'))
+    images = ListField(ImageField(collection_name="disease"))
+
+
+class Discussion(Forum):
+    users = ListField(ReferenceField('MyUser'))
+    public_term = ReferenceField('PublicTerms')
+
+
+
+class Article(Document):
+    founder = ReferenceField(MyUser)
+    date_publication = DateTimeField(default=datetime.datetime.now)
+    last_modification = DateTimeField(default=datetime.datetime.now)
+    name = StringField(max_length=200)
+    description = StringField()
+    images = ListField(ImageField(collection_name="article"))
+
 
 # userRole = UserRoles(name='normal')
 # userRole.save()
@@ -96,26 +146,4 @@ class MyUser(models.Model):
 #   Permission.objects.create(codename='can_add_new_place', name='Dodawanie nowego miejsca')
  
 
-class Comment(models.Model):
-    user = models.ForeignKey(User)
-    date_publication = models.DateTimeField()
-    name = models.CharField(max_length=200, null=True)
-    description = models.CharField(max_length=1000)
-    time_duration = models.CharField(max_length=200, null=True)
-    tips = models.CharField(max_length=200, null=True)
-    points_tips = models.FloatField()
-    point_comment = models.FloatField()
-
-class Article(models.Model):
-    user = models.ForeignKey(User)
-    date_publication = models.DateTimeField()
-    name = models.CharField(max_length=200)
-    description = models.TextField()
-        
-class Disease(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.CharField(max_length=1000)
-    cure = models.CharField(max_length=1000)
-    articles = models.ManyToManyField(Article)
-    comments = models.ManyToManyField(Comment)
 """

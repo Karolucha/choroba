@@ -58,6 +58,9 @@
 <div id="jeden">1</div>
 
 <h2 id="personal">To Twoje dane osobowe:</h2>
+<button class="btn btn-success">
+                <span class="glyphicon glyphicon-refresh"/>Odśwież statystyki
+            </button>
     <form method="POST" action="{% url 'portal.user_views.account' %}">{% csrf_token %}
 <table>
     <tr><td>Imię </td><td><input type="text" name="name" value="{{ my_user.user.username }}" style="margin-left:5%;border:solid green" > </td></tr>

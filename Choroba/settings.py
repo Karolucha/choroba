@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 MEDIA_ROOT = BASE_DIR + '/media/'
-
+MEDIA_URL = '/media/'
 TEMPLATE_DIRS = (
     BASE_DIR + '/templates/',
 )
