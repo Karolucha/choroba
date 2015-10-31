@@ -27,11 +27,60 @@
     </div>
     <div id="commentaries">
         {% for comment in disease.comments %}
+        <div class="row">
+            <div class="col-md-8">
             <div class="comment">
                 <img src="../static/images/landscape.png" class="image_little_profile"/>
                 <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
+        {% ifequal comment.category.name "Specialized" %}
+        <div class="row">
+            <p class="comment_dsc">{{ comment.description }}</p>
+        </div>
+                {% if comment.tips %}
+            <div class="row">
+                <div class="col-md-4">Moje porady:</div>
+                <div class="col-md-4">{{ comment.tips }}</div>
+                <div class="col-md-4"></div>
+              </div>
+                {% endif %}
+            <div class="row">
+                <div class="col-md-4">Wiek w czasie choroby:</div>
+                <div class="col-md-4">{{ comment.age }}</div>
+                <div class="col-md-4"></div>
+              </div>
+            <div class="row">
+                <div class="col-md-4">Czas trwania:</div>
+                <div class="col-md-2">{{ comment.value_duration }}</div>
+                <div class="col-md-2">{{ comment.unit_duration }}</div>
+                <div class="col-md-4"></div>
+              </div>
+        {% else %}
                 <p class="comment_dsc">{{ comment.description }}</p>
+        {% endifequal %}
             </div>
+            </div>
+            <div class="col-md-2">
+                <div class="row"><div class="col-md-8">
+                <form method="POST" action="{% url 'portal.views.like_comment' %}">{% csrf_token %}
+                    <input type="hidden" name="commentary_id" value="{{ comment.id }}"/>
+                    <input type="submit" class="btn btn-success" value="PLUSUJĘ"/>
+                </form>
+                </div>
+                       <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-5">Ocena komentarza:</div>
+                    <div class="col-md-5">+{{ comment.point_comment }}</div>
+                    <div class="col-md-2"></div>
+                    </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        {% if comment.image %}
+        Zdjęcie zamieszczone do komentarza:
+            {{ comment.image }}
+        {% endif %}
         {% endfor %}
     </div>
 
@@ -53,21 +102,22 @@
     </div>
   </div>
   <div id="tabs-2">
-              <form method="POST" action="{% url 'portal.views.add_specific_comment' %}">{% csrf_token %}
+              <form method="POST" action="{% url 'portal.views.add_specific_comment' %}" enctype="multipart/form-data">{% csrf_token %}
+                  <input type="hidden" name="disease_id" value="{{ disease.id }}">
         <div class="row">
             <div class="col-md-4">
                 Czas trwania choroby
             </div>
             <div class="col-md-4">
-                <select name="number" id="unit_duration">
+                <select name="unit_duration" id="unit_duration">
                       <option value="">-- JEDNOSTKA --</option>
-                      <option value="D">Dni</option>
-                      <option value="W">Tygodni</option>
-                      <option value="M">Miesięcy</option>
+                      <option value="Dni">Dni</option>
+                      <option value="Tygodni">Tygodni</option>
+                      <option value="Miesięcy">Miesięcy</option>
                 </select>
             </div>
             <div class="col-md-4">
-                <select name="number" id="value_duration"></select>
+                <select name="value_duration" id="value_duration"></select>
             </div>
         </div>
         <div class="row">
@@ -84,7 +134,7 @@
                 Porady/pomogło mi:
             </div>
             <div class="col-md-8">
-                <textarea class="specific_comment"></textarea>
+                <textarea class="specific_comment" name="tips"></textarea>
             </div>
         </div>
       <div class="row">
@@ -92,14 +142,14 @@
                 Dolegliwości:
             </div>
             <div class="col-md-8">
-                <textarea class="specific_comment"></textarea>
+                <textarea name="description" class="specific_comment"></textarea>
             </div>
 
         </div>
       <div class="row">
             <div class="col-md-4"> Zmiany chorobowe </div>
             <div class="col-md-4">
-                <input type="file" class="btn btn-primary" value="Załączam zdjęcie"/>
+                <input type="file" name="image" class="btn btn-primary" value="Załączam zdjęcie"/>
             </div>
             <div class="col-md-4"> </div>
       </div>
@@ -107,7 +157,7 @@
       <div class="row">
             <div class="col-md-4"> </div>
             <div class="col-md-4">
-                <input style="width:100%" type="submit" class="btn btn-success" value="Prześlij"/>
+                <input style="width:100%" type="submit" name="image" class="btn btn-success" value="Prześlij"/>
             </div>
             <div class="col-md-4"> </div>
       </div>

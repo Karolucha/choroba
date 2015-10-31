@@ -9,16 +9,16 @@ diseaseApp.controller('DiseaseListCtrl', function ($scope) {
 console.log("działa");
 
  var values_duration = {};
-values_duration['D'] = [];
+values_duration['Dni'] = [];
 for (i = 1; i < 31; i++) {
-   values_duration['D'].push(i);
+   values_duration['Dni'].push(i);
         }
-values_duration['W'] = ['1', '2', '3', '4'];
-values_duration['M'] = [];
+values_duration['Tygodni'] = ['1', '2', '3', '4'];
+values_duration['Miesięcy'] = [];
 for (i = 1; i < 13; i++) {
-   values_duration['M'].push(i);
+   values_duration['Miesięcy'].push(i);
         }
-values_duration['M'].push('Powyżej roku');
+values_duration['Miesięcy'].push('Powyżej roku');
 console.log(values_duration);
 $('#unit_duration').on('change', function() {
     console.log(values_duration);

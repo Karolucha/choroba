@@ -7,7 +7,6 @@ import mongoengine
 
 
 def disease(request, disease_id):
-    print('nothing!!!')
     try:
         get_disease = Disease.objects.get(id=disease_id)
     except Disease.DoesNotExist:
@@ -15,62 +14,70 @@ def disease(request, disease_id):
     return render_to_response('disease/disease.html', {'disease': get_disease}, context_instance=RequestContext(request))
 
 
+def like_comment(request):
+    if request.POST:
+        commentary= Comment.objects.get(id=request.POST['commentary_id'])
+        commentary.point_comment+=1
+        user = commentary.user
+        user.point+=1
+        user.save()
+        commentary.save()
+
 def add_specific_comment(request):
-    get_diseases = Disease.objects.all()
-    if (request.POST):
-        import pprint
-        pprint.pprint(request.POST)
-        time_dur=request.POST['unit_duration']+request.POST['value_duration']
-        new_comment = Comment(date_publication=datetime.datetime.now(), description=request.POST['comment_to_add'], time_duration=time_dur)
+    category = CommentCategory.objects.get(name="Specialized")
+    disease_to_comment = Disease.objects.get(id=request.POST['disease_id'])
+    unit_duration_mapping={'D':"Dni","W":"Tygodni","M":"Miesięcy"}
+    if request.POST:
+        unit_dur = request.POST['unit_duration']
+        value_dur = request.POST['value_duration']
+        tips = request.POST['tips']
+        age = request.POST['age']
+        dsc = request.POST['description']
+        new_comment = Comment(description=dsc, unit_duration=unit_dur, age=age, value_duration=str(value_dur), category=category, disease=disease_to_comment, tips=tips,point_comment=0.0)
         user_id = request.user.id
-        print(request.user.id)
         new_comment.user = MyUser.objects.get(user=User.objects.get(id=user_id))
-        print(new_comment.user)
+      #  new_comment.image = request.POST['image']
         new_comment.save()
-        disease_to_comment = Disease.objects.get(id=request.POST['disease_id'])
+        user = new_comment.user
+        user.comments.append(new_comment)
+        user.save()
         disease_to_comment.comments.append(new_comment)
         disease_to_comment.save()
     else:
         return render_to_response(request, 'base/index.html', {'all_news': None}, context_instance=RequestContext(request))
     #return render_to_response('disease/disease.html', {'disease': get_diseases}, context_instance=RequestContext(request))
-    return render(request,"disease/disease.html", {'disease': get_diseases})
+    return render(request,"disease/disease.html", {'disease': disease_to_comment})
 
 
 def add_question(request):
-    get_diseases = Disease.objects.all()
-    if (request.POST):
-        import pprint
-        pprint.pprint(request.POST)
-        new_comment = Comment(date_publication=datetime.datetime.now(), description=request.POST['comment_to_add'])
+    category = CommentCategory.objects.get(name="Question")
+    disease_to_comment = Disease.objects.get(id=request.POST['disease_id'])
+    if request.POST:
+        new_comment = Comment(category=category, description=request.POST['comment_to_add'])
         user_id = request.user.id
-        print(request.user.id)
         new_comment.user = MyUser.objects.get(user=User.objects.get(id=user_id))
-        print(new_comment.user)
         new_comment.save()
-        disease_to_comment = Disease.objects.get(id=request.POST['disease_id'])
+
         disease_to_comment.comments.append(new_comment)
         disease_to_comment.save()
     else:
         return render_to_response(request, 'base/index.html', {'all_news': None}, context_instance=RequestContext(request))
     #return render_to_response('disease/disease.html', {'disease': get_diseases}, context_instance=RequestContext(request))
-    return render(request,"disease/disease.html", {'disease': get_diseases})
+    return render(request,"disease/disease.html", {'disease': disease_to_comment})
 
 
 def add_comment(request):
-    get_diseases = Disease.objects.all()
-    if (request.POST):
-        import pprint
-        pprint.pprint(request.POST)
-        new_comment = Comment(date_publication=datetime.datetime.now(), description=request.POST['comment_to_add'])
+    category = CommentCategory.objects.get(name="Disease")
+    disease_to_comment = Disease.objects.get(id=request.POST['disease_id'])
+    if request.POST:
+        new_comment = Comment(category=category,description=request.POST['comment_to_add'])
         user_id = request.user.id
-        print(request.user.id)
         new_comment.user = MyUser.objects.get(user=User.objects.get(id=user_id))
-        print(new_comment.user)
+        new_comment.point_comment=0.0
         new_comment.save()
-        disease_to_comment = Disease.objects.get(id=request.POST['disease_id'])
         disease_to_comment.comments.append(new_comment)
         disease_to_comment.save()
     else:
         return render_to_response(request, 'base/index.html', {'all_news': None}, context_instance=RequestContext(request))
     #return render_to_response('disease/disease.html', {'disease': get_diseases}, context_instance=RequestContext(request))
-    return render(request,"disease/disease.html", {'disease': get_diseases})
+    return render(request,"disease/disease.html", {'disease': disease_to_comment})

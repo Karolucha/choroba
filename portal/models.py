@@ -76,7 +76,7 @@ class Comment(Document):
     tips = StringField(max_length=200, null=True)
     points_tips = FloatField(null=True, default=0.0)
     point_comment = FloatField(null=True, default=0.0)
-    images = ListField(ImageField(collection_name="comment"), null=True)
+    image = ImageField(collection_name="comment", null=True)
     category = ReferenceField(CommentCategory)
     disease = ReferenceField('Disease', null=True)
 

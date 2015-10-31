@@ -89,7 +89,7 @@ def register(request):
     if request.POST:
         User.create_user(username=request.POST['username'], email=request.POST['email'], password=request.POST['password'])
         user = authenticate(username=request.POST['username'], password=request.POST['password'])
-        my_user = MyUser()
+        my_user = MyUser(point=0.0,comment_count=0,disease_added_count=0,article_added_count=0,discussion_added_count=0,forum_present_count=0)
         my_user.user = user
         my_user.save()
         login(request, user)
