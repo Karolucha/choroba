@@ -53,6 +53,7 @@ class MyUser(Document):
 
 class PublicTerms(Document):
     name = StringField()
+    code = StringField()
 
 
 class Invitation(Document):
@@ -99,7 +100,7 @@ class Disease(Forum):
 class Discussion(Forum):
     users = ListField(ReferenceField('MyUser'))
     public_term = ReferenceField('PublicTerms')
-
+    date_register = DateTimeField(default=datetime.datetime.now)
 
 
 class Article(Document):

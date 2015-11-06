@@ -5,6 +5,7 @@ from django.template import RequestContext
 import datetime
 import mongoengine
 from portal.disease_views import *
+from portal.discussion_view import *
 from mongoengine.django.auth import *
 from django.views.decorators.csrf import csrf_protect
 mongoengine.connect('misiowa')
@@ -55,6 +56,9 @@ def article(request, article_id):
     except Disease.DoesNotExist:
         raise Http404("Poll does not exist")
     return render_to_response('disease/article.html', {'article': get_article}, context_instance=RequestContext(request))
+
+
+
 
 def add_perms():
 

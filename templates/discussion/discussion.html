@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}{{discussion.name}}{% endblock %}
+{% block left-content %}
+    <h4>Inne dyskusje w których są komentarze od {{ user.username}}</h4>
+    <ul>
+    </ul>
+{% endblock %}
+{% block content %}
+    <div style="margin-top:50px;">FORUM</div><hr>
+    <h3>{{ discussion.name|upper }}</h3>
+      <div class="row">
+          <form method="POST" action="{% url 'portal.views.add_comment_discussion' %}">{% csrf_token %}
+      <div class="col-md-1"></div>
+      <div class="col-md-2">Chcę zaprosić do dyskusji:</div>
+      <div class="col-md-6">{{ term.name }}</div>
+      <div class="col-md-3"></div>
+              </form>
+  </div>
+    <h5>Opis grupy:</h5>
+    <div style="border:1px solid #730029; margin:10px;width:50%">
+    <div id="dsc_disease_short"  style="margin:10px;"> {{ discussion.description|truncatewords:"3"}}<button class="glyphicon glyphicon-plus" ng-click="more_dsc()"/></div>
+    <div id="dsc_disease"  style="margin:10px;"> {{ discussion.description }}<button style="margin-left:20px;" class="glyphicon glyphicon-minus" ng-click="less_dsc()"/></div>
+    </div>
+    <div id="commentaries">
+        {% for comment in discussion.comments %}
+        <div class="row">
+            <div class="col-md-8">
+            <div class="comment">
+                <img src="../static/images/landscape.png" class="image_little_profile"/>
+                <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
+                <p class="comment_dsc">{{ comment.description }}</p>
+            </div>
+            </div>
+            <div class="col-md-2">
+                <div class="row"><div class="col-md-8">
+                <form method="POST" action="{% url 'portal.views.like_comment' %}">{% csrf_token %}
+                    <input type="hidden" name="commentary_id" value="{{ comment.id }}"/>
+                    <input type="submit" class="btn btn-success" value="PLUSUJĘ"/>
+                </form>
+                </div>
+                       <div class="col-md-4"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-5">Ocena komentarza:</div>
+                    <div class="col-md-5">+{{ comment.point_comment }}</div>
+                    <div class="col-md-2"></div>
+                    </div>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        {% if comment.image %}
+        Zdjęcie zamieszczone do komentarza:
+            {{ comment.image }}
+        {% endif %}
+        {% endfor %}
+    </div>
+
+
+
+<div id="leave_comment">
+
+
+    <div id="add_my_comment">
+        <form method="POST" action="{% url 'portal.views.add_comment_discussion' %}">{% csrf_token %}
+            <input type="hidden" name="discussion_id" value="{{ discussion.id }}">
+            <textarea class="textarea_comment" name="comment_to_add"></textarea>
+            <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Dodaj komentarz"/>
+        </form>
+    </div>
+
+</div>
+
+
+{% endblock %}
