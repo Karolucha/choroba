@@ -12,13 +12,22 @@
     <div style="margin-top:50px;">FORUM</div><hr>
     <h3>{{ discussion.name|upper }}</h3>
       <div class="row">
-          <form method="POST" action="{% url 'portal.views.add_comment_discussion' %}">{% csrf_token %}
-      <div class="col-md-1"></div>
-      <div class="col-md-2">Chcę zaprosić do dyskusji:</div>
-      <div class="col-md-6">{{ term.name }}</div>
-      <div class="col-md-3"></div>
-              </form>
+          <!--<form method="POST" action="{% url 'portal.views.add_comment_discussion' %}">{% csrf_token %}-->
+      <!--<div class="col-md-1"></div>-->
+      <!--<div class="col-md-2">Chcę zaprosić do dyskusji:</div>-->
+      <!--<div class="col-md-6">{{ term.name }}</div>-->
+      <!--<div class="col-md-3"></div>-->
+              <!--</form>-->
+          <div class="ui-widget">
+  <label for="tags">Tags: </label>
+  <input id="tags">
+</div>
   </div>
+ <div class="ui-widget">
+  <label for="tags">Tags: </label>
+  <input class="selector">
+</div>
+<input class="search-people">
     <h5>Opis grupy:</h5>
     <div style="border:1px solid #730029; margin:10px;width:50%">
     <div id="dsc_disease_short"  style="margin:10px;"> {{ discussion.description|truncatewords:"3"}}<button class="glyphicon glyphicon-plus" ng-click="more_dsc()"/></div>

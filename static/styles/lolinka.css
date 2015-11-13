@@ -59,7 +59,9 @@ margin:15px;
 #content{
     margin-left:5%;
     margin-top:100px;
-    height:1500px;
+    margin-bottom:30px;
+    height:100%;
+
 }
 #add_my_comment{
 

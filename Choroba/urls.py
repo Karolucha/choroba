@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^account/$', 'portal.user_views.account'),
     url(r'^register/$', 'portal.user_views.register'),
     url(r'^profile/(?P<user_id>\w+)/$', 'portal.user_views.profile'),
+    url(r'^search_friend/(?P<friend>\w+)$', 'portal.user_views.search_friend'),
     url(r'^add_friend/(?P<user_id>\w+)$', 'portal.user_views.add_friend'),
     # url(r'^change_profile/$', 'portal.user_views.change_profile'),
     url(r'^login/$', 'portal.user_views.logging'),

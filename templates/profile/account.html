@@ -23,12 +23,34 @@
 
 {% endfor %}
     Skorzystaj z filtra i zaproś przyjaciół!
+      <form method="POST" action="{% url 'portal.user_views.account' %}"> {{ csrf_token }}
 <div class=row>
         <input type="hidden" name="disease_id" value="{{ disease.id }}"><br/>
-    <div class="col-xs-4">
-        <textarea name="find_user" class="find_user"></textarea><br/>
+    <div class="col-xs-12">
+        <textarea name="text_to_search" class="find_user"></textarea><br/>
     </div>
 </div>
+<div class=row>
+    <div class="col-xs-12">
+        <input type="submit" name="find_user" class="btn btn-success"/><br/>
+    </div>
+</div>
+          </form>
+    {% for user in founded_users %}
+<div class="row">
+    <div class="col-xs-3">   {{ user.user.username }} </div>
+    <div class="col-xs-2"></div>
+    <div class="col-xs-3">
+        <a href="/profile/{{user.user.id}}">
+            Profil
+        </a>
+    </div>
+    <div class="col-xs-2">
+        <button class="btn btn-sucess" ng-click="add_friend('{{user.user.id}}')" id="{{user.user.id}}"><span class="glyphicon glyphicon-plus"/></button>
+    </div>
+</div>
+
+{% endfor %}
 </div>
 {% endblock %}
 {% block content %}

@@ -98,7 +98,9 @@ def register(request):
     else:
         return render_to_response('profile/register.html',{'users': users_from_database}, RequestContext(request))
 
-
+def search_friend(friend):
+    all_users = MyUser.objects.all()
+    return all_users
 
 def get_all_users():
     all_users = MyUser.objects.all()
@@ -108,16 +110,18 @@ def account(request):
     all_users = MyUser.objects.all()
     print(all_users)
     print("tu zyja userzy")
+    user = User.objects.get(id=request.user.id)
+    my_user = MyUser.objects.get(user=user)
     if (request.POST):
-        user = User.objects.get(id=request.user.id)
-        my_user = MyUser.objects.get(user=user)
-        if(request.POST['surname']):
-            my_user.user.surname=request.POST['surname']
-        # if(request.POST['birthday']):
-        #     my_user.birthdate=request.POST['birthday']
-        my_user.save()
-        return render_to_response('profile/account.html',{'my_user': my_user,'all_users': all_users}, RequestContext(request))
+        if "text_to_search" in request.POST:
+            username = request.POST['text_to_search']
+            founded_users = MyUser.objects.filter(username__contains=username)
+        else:
+            if(request.POST['surname']):
+                my_user.user.surname=request.POST['surname']
+            # if(request.POST['birthday']):
+            #     my_user.birthdate=request.POST['birthday']
+            my_user.save()
+        return render_to_response('profile/account.html',{'my_user': my_user,'all_users': all_users, 'founded_users':founded_users}, RequestContext(request))
     else:
-        user = User.objects.get(id=request.user.id)
-        my_user = MyUser.objects.get(user=user)
         return render_to_response('profile/account.html', {'my_user': my_user, 'all_users': all_users}, RequestContext(request))

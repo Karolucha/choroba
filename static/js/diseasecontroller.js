@@ -56,19 +56,25 @@ if($('#still_disease').prop('checked', true)) {
         $('#dsc_disease_short').show();
         $('#dsc_disease').hide();
     }
+
     $scope.add_friend = function(friend_id){
         console.log("na ja");
-//        $.ajax({
-//            url: '127.0.0.1:8000/add_friend',
-//            type: 'post',
-//            data: {friend_id:friend_id},
-//            success: function(data) {
-//                alert(data);
-//            },
-//            failure: function(data) {
-//                alert('Got an error dude');
-//            }
-//        });
+         $.ajaxSetup({
+  data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+});
+        $.ajax({
+            url: '127.0.0.1:8000/add_friend',
+            type: 'post',
+            data: {friend_id:friend_id,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(data) {
+                alert(data);
+            },
+            failure: function(data) {
+                alert('Got an error dude');
+            }
+        });
     }
     $scope.save_new_comment = function (text, userId, diseaseId) {
          console.log("guten tag");
@@ -93,5 +99,35 @@ if($('#still_disease').prop('checked', true)) {
         console.log("na ja");
         $('#jeden').val('lala');
     }
+console.log("TU DZIALA CONTROLER");
+//    $( ".selector" ).autocomplete({
+//         source: [ "c++", "java", "php", "coldfusion", "javascript", "asp", "ruby" ]
+//    });
+//    $( ".search-people" ).keypress(function() {
+//  console.log( "Handler for .keypress() called." );
+//  if($(this).val().length>3){
+//  console.log($(this).val().length);
+//console.log($(this).val());
+//  $.ajax({
+//    type: "get",
+//    url: '/',
+//  //  data: $(this).val(),
+//    context: this,
+//    success: function(data) {
+//            console.log(data);
+////       $('#LoginModal').html(data);
+//    }
+//    });
+//    return false;
+//    }else{
+//console.log($(this).val().length);
+//}
+//});
 
+$(document).on('focus', '.search-people', function(){
+ $(this).css("background-color", "#cccccc");
+});
+    $(document).on('blur', '.search-people', function(){
+        $(this).css("background-color", "#ffffff");
+    });
 });
