@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render, render_to_response,HttpResponse
 from portal.models import *
 from django.http import Http404
 from django.template import RequestContext
@@ -9,7 +9,7 @@ from portal.discussion_view import *
 from mongoengine.django.auth import *
 from django.views.decorators.csrf import csrf_protect
 mongoengine.connect('misiowa')
-
+import json
 
 def index(request):
     return render(request, 'base/index.html', {'all_news': None}, context_instance=RequestContext(request))
@@ -58,6 +58,31 @@ def article(request, article_id):
     return render_to_response('disease/article.html', {'article': get_article}, context_instance=RequestContext(request))
 
 
+def get_cycki(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        print("loking for "+q)
+        cyckis = Disease.objects.filter(name__icontains=q)[:20]
+
+        results = []
+        for cycki in cyckis:
+            cycki_json = {}
+            cycki_json['id'] = 1
+            cycki_json['label'] = cycki.name
+            cycki_json['value'] = cycki.name
+            print(cycki_json)
+            results.append(cycki_json)
+        results=json.dumps(results)
+        print("my data: "+str(results))
+        mimetype = 'application/json'
+        print(results)
+        return HttpResponse(results, mimetype)
+    else:
+        data = 'fail'
+    print("**************************")
+    mimetype = 'application/json'
+    print(data)
+    return HttpResponse(data, mimetype)
 
 
 def add_perms():

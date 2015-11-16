@@ -130,4 +130,12 @@ $(document).on('focus', '.search-people', function(){
     $(document).on('blur', '.search-people', function(){
         $(this).css("background-color", "#ffffff");
     });
+
+
+
+
+
+
+
+
 });
