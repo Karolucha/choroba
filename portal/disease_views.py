@@ -7,11 +7,15 @@ import mongoengine
 
 
 def disease(request, disease_id):
+    user = False
     try:
+        if request.user.id:
+            user_id = request.user.id
+            user = MyUser.objects.get(user=User.objects.get(id=user_id))
         get_disease = Disease.objects.get(id=disease_id)
     except Disease.DoesNotExist:
         raise Http404("Poll does not exist")
-    return render_to_response('disease/disease.html', {'disease': get_disease}, context_instance=RequestContext(request))
+    return render_to_response('disease/disease.html', {'disease': get_disease, 'myuser':user}, context_instance=RequestContext(request))
 
 
 def like_comment(request):

@@ -18,7 +18,21 @@
     </ul>
 {% endblock %}
 {% block content %}
-    <div style="margin-top:50px;">FORUM</div><hr>
+
+
+
+<div id="forum_question">
+
+<div class="leave_comment">
+    <ul>
+    <li><a href="#tabs_forum">Forum</a></li>
+    <li><a href="#tabs_hot_question">Pytanie do lekarza</a></li>
+    <li><a href="#tabs_articles">Artykuły</a></li>
+    <li><a href="#tabs_discussion">Grupy dyskusyjne</a></li>
+    </ul>
+</div>
+    <hr/>
+<div id="tabs_forum">
     <h3>{{ disease.name|upper }}</h3>
     <h5>Opis zjawiska:</h5>
     <div style="border:1px solid #730029; margin:10px;width:50%">
@@ -60,13 +74,25 @@
             </div>
             </div>
             <div class="col-md-2">
-                <div class="row"><div class="col-md-8">
-                <form method="POST" action="{% url 'portal.views.like_comment' %}">{% csrf_token %}
-                    <input type="hidden" name="commentary_id" value="{{ comment.id }}"/>
-                    <input type="submit" class="btn btn-success" value="PLUSUJĘ"/>
-                </form>
-                </div>
-                       <div class="col-md-4"></div>
+                {% if user.is_authenticated %}
+                <div class="row">
+                    <div class="col-md-8">
+                        <form method="POST" action="{% url 'portal.views.like_comment' %}">{% csrf_token %}
+                            <input type="hidden" name="commentary_id" value="{{ comment.id }}"/>
+                            <input type="submit" class="btn btn-success" value="PLUSUJĘ"/>
+                        </form>
+                    </div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-2">
+                            {% for role in myuser.roles %}
+                                {% ifequal role.name "Lekarz dyżurny" %}
+                                    <form method="POST" action="{% url 'portal.views.like_comment' %}">{% csrf_token %}
+                                        <input type="hidden" name="commentary_id" value="{{ comment.id }}"/>
+                                        <input type="submit" class="btn btn-success" value="zgłoś"/>
+                                    </form>
+                                {% endifequal %}
+                            {% endfor %}
+                        </div>
                 </div>
                 <div class="row">
                     <div class="col-md-2"></div>
@@ -74,6 +100,8 @@
                     <div class="col-md-5">+{{ comment.point_comment }}</div>
                     <div class="col-md-2"></div>
                     </div>
+                {% endif %}
+
             </div>
             <div class="col-md-2"></div>
         </div>
@@ -86,7 +114,7 @@
 
 
 
-<div id="leave_comment">
+<div class="leave_comment">
   <ul>
     <li><a href="#tabs-1">Skomentuj</a></li>
     <li><a href="#tabs-2">Sprecyzuj przebieg</a></li>
@@ -172,6 +200,52 @@
 
   </div>
 </div>
+    </div><!--tabs-forum id-->
+<div id="tabs_hot_question">
 
+  {% for comment in disease.comments %}
+    {% ifequal comment.category.name "Question" %}
+        <div class="row">
+            <div class="col-md-8">
+            <div class="comment">
+                <img src="../static/images/landscape.png" class="image_little_profile"/>
+                <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
+
+                <div class="row">
+                    <p class="comment_dsc">{{ comment.description }}</p>
+                </div>
+    {% endifequal %}
+  {% endfor %}
+    {% for role in myuser.roles %}
+        {% ifequal role.name "Specjalista" %}
+        <form method="POST" action="{% url 'portal.views.add_comment' %}">{% csrf_token %}
+            <input type="hidden" name="disease_id" value="{{ disease.id }}">
+            <textarea class="textarea_comment" name="comment_to_add"></textarea>
+            <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Pytanie do specjalisty"/>
+        </form>
+        {% endifequal %}
+    {% endfor %}
+</div><!--tabs-hot_question id-->
+
+<div id="tabs_articles">
+                {% for article in disease.articles %}
+<div class="article_left">{{ article.date_publication }}
+<p><strong>
+    <a href="/article/{{article.id}}">
+        {{ article.name }}
+    </a>
+</strong>
+</p>
+    </div>
+<div class="description_disease_short">
+    {{ article.description|truncatewords:"10" }}... WIĘCEJ
+</div>
+{% endfor %}
+</div><!--tabs-article id-->
+<div id="tabs_discussion">
+    W wątku choroby {{disease.name }} założono grupy dyskusyjne:
+
+</div><!--tabs-discussion id-->
+</div><!--forum_question id-->
 
 {% endblock %}

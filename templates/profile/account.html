@@ -56,17 +56,87 @@
 {% block content %}
 
 <div style="margin-top:5%"></div>
-<nav>
-  <a href="#sec1">Moja aktywność</a> |
-  <a href="#sec1">Znajomi</a> |
-  <a href="#personal">Moje dane</a> |
-    <a href="#commentaries">Moje komentarze</a> |
-    <a href="/js/">Zgłoś dolegliwość</a> |
-    <a href="/js/">Dodaj artykuł</a> |
-  <a href="/jquery/">Moje artykuły </a>
-</nav>
-<h2 id="commentaries">To Twoje komentarze:</h2>
- {% if    user.comments %}
+<div class="leave_comment">
+  <ul>
+    <li><a href="#tabs-11">Moja aktywność</a></li>
+    <li><a href="#tabs-12">Znajomi</a></li>
+    <li><a href="#tabs-13">Moje dane</a></li>
+    <li><a href="#tabs-14">Moje komentarze</a></li>
+    <li><a href="#tabs-5">Dodaj artykuł</a></li>
+    <li><a href="#tabs-6">Dodaj chorobę</a></li>
+    <li><a href="#tabs-7">Dodaj grupę dyskusyjną</a></li>
+  </ul>
+<div id="tabs-11">
+<div class=row>
+    <div class="col-md-3">
+    Liczba udzielonych komentarzy:
+    </div>
+    <div class="col-md-2">
+    {{ my_user.comment_count }}
+    </div>
+</div>
+{% if    my_user.articles %}
+<div class=row>
+    <div class="col-md-3">
+    Liczba dodanych artykułów:
+    </div>
+    <div class="col-md-2">
+    {{ my_user.article_added_count }}
+    </div>
+</div>
+<div class=row>
+    <div class="col-md-3">Moje artykuły:</div>
+</div>
+{% for article in my_user.articles %}
+<div class=row>
+<div class="col-md-8">
+    <div class="comment">
+        <a href="/article/{{article.id}}">{{ article.name|truncatewords:"5" }}</a>
+    </div>
+</div>
+</div>
+{% endfor %}
+{% endif %}
+<div class=row>
+    <div class="col-md-3">
+    Liczba dodanych chorób:
+    </div>
+    <div class="col-md-2">
+    {{ my_user.disease_added_count }}
+    </div>
+</div>
+</div><!--acticity section-->
+<div id="tabs-13">
+<h2 id="personal">To Twoje dane osobowe:</h2>
+<button class="btn btn-success">
+                <span class="glyphicon glyphicon-refresh"/>Odśwież statystyki
+            </button>
+
+    <form method="POST" action="{% url 'portal.user_views.account' %}">{% csrf_token %}
+<div class=row>
+<div class="col-md-8">
+    <table>
+        <tr><td>Imię </td><td><input type="text" name="name" value="{{ my_user.user.username }}" style="margin-left:5%;border:solid green" > </td></tr>
+        <tr><td>Nazwisko </td><td> <input type="text" name="surname" value="{{ my_user.user.surname }}" style="margin-left:5%;border:solid green" ></td></tr>
+        <tr><td>E-mail</td><td> <input type="text" name="e-mail" value="{{ my_user.user.email }}" style="margin-left:5%;border:solid green" ></td></tr>
+        <tr><td>Data urodzenia</td><td> <input type="date" name="birthday" value="{{ my_user.birthdate }}" style="margin-left:5%;border:solid green" ></td></tr>
+        <tr><td>Liczba prowadzonych dyskusji</td><td> <input type="text" name="fname" value="{{ my_user.discusion_present_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
+        <tr><td>Liczba dodanych chorób</td><td> <input type="text" name="fname" value="{{ my_user.disease_added_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
+       <tr><td>Liczba przyznanych punktów</td><td><input type="text" name="fname" value="{{ my_user.point }}" style="margin-left:5%;border:solid green" readonly></td></tr>
+        <tr><td>Liczba dodanych komentarzy</td><td> <input type="text" name="fname" value="{{ my_user.comment_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
+        <tr><td>O mnie</td><td><input type="text" name="about" value="{{ my_user.note }}" style="margin-left:5%;border:solid green" ></td></tr>
+    </table>
+</div>
+<div class="col-md-2">
+
+</div>
+    </div>
+    <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Zatwierdź"/>
+    </form>
+
+</div><!--dane #tabs-3 -->
+<div class="tabs-14">
+ {% if    my_user.comments %}
  {% for comment in user.comments %}
         <div class="comment">
             <img src="../static/images/landscape.png" class="image_little_profile"/>
@@ -77,25 +147,9 @@
 {% else %}
 <p>Jeszcze nie dodałeś komentarzy!</p>
 {% endif %}
-<div id="jeden">1</div>
+</div><!--dane #tabs-4 -->
+    <div class="tabs-5">
 
-<h2 id="personal">To Twoje dane osobowe:</h2>
-<button class="btn btn-success">
-                <span class="glyphicon glyphicon-refresh"/>Odśwież statystyki
-            </button>
-    <form method="POST" action="{% url 'portal.user_views.account' %}">{% csrf_token %}
-<table>
-    <tr><td>Imię </td><td><input type="text" name="name" value="{{ my_user.user.username }}" style="margin-left:5%;border:solid green" > </td></tr>
-    <tr><td>Nazwisko </td><td> <input type="text" name="surname" value="{{ my_user.user.surname }}" style="margin-left:5%;border:solid green" ></td></tr>
-    <tr><td>E-mail</td><td> <input type="text" name="e-mail" value="{{ my_user.user.email }}" style="margin-left:5%;border:solid green" ></td></tr>
-    <tr><td>Data urodzenia</td><td> <input type="date" name="birthday" value="{{ my_user.birthdate }}" style="margin-left:5%;border:solid green" ></td></tr>
-    <tr><td>Liczba prowadzonych dyskusji</td><td> <input type="text" name="fname" value="{{ my_user.discusion_present_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
-    <tr><td>Liczba dodanych chorób</td><td> <input type="text" name="fname" value="{{ my_user.disease_added_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
-   <tr><td>Liczba przyznanych punktów</td><td><input type="text" name="fname" value="{{ my_user.point }}" style="margin-left:5%;border:solid green" readonly></td></tr>
-    <tr><td>Liczba dodanych komentarzy</td><td> <input type="text" name="fname" value="{{ my_user.comment_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
-    <tr><td>O mnie</td><td><input type="text" name="about" value="{{ my_user.note }}" style="margin-left:5%;border:solid green" ></td></tr>
-</table>
-    <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Zatwierdź"/>
-    </form>
-
+</div><!--dane #tabs-5 -->
+</div><!--Ostatni leave_comment -->
 {% endblock %}

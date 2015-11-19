@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% load staticfiles %}
-<script src="{% static 'js/cyckowanie.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/cyckowanie.js' %}"></script>
 <link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
-<
+
 {% block title %}Wyszukiwarka{% endblock %}
 
 
@@ -23,17 +23,7 @@
 </ul>
 {% endblock %}
 {% block content %}
-<script>
-    $(document).ready(function() {
 
-    $('#reksio_pomocnik').autocomplete({
-        minLength: 2,
-   	 	source: "/api/get_cycki",
-
-    }
-    );
-});
-</script>
 <p>Wyszukaj interesującej dolegliwości</p>
 <button class="btn" ng-click="ssave()">TU GUZIK</button>
 <form action="{% url 'portal.views.search_disease' %}" method="POST">

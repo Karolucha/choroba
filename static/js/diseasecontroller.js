@@ -6,6 +6,7 @@ var diseaseApp = angular.module('diseaseApp', []).config(function($interpolatePr
 });
 
 diseaseApp.controller('DiseaseListCtrl', function ($scope) {
+
 console.log("działa");
 
  var values_duration = {};
@@ -39,8 +40,12 @@ $('#unit_duration').on('change', function() {
     }
 });
   $(function() {
-    $( "#leave_comment" ).tabs();
+    $( "#forum_question").tabs();
+    $( ".leave_comment" ).tabs();
+    $( "#tabs" ).tabs();
+    console.log("UU");
   });
+
 if($('#still_disease').prop('checked', true)) {
 
 }
@@ -134,8 +139,17 @@ $(document).on('focus', '.search-people', function(){
 
 
 
+$scope.cyckowanie=function(){
+$(document).ready(function() {
 
-
+    $('#reksio_pomocnik').autocomplete({
+   	 	source: "/api/get_cycki",
+         minLength: 2,
+    }
+    );
+});
+};
+$scope.cyckowanie();
 
 
 });
