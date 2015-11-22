@@ -78,7 +78,7 @@ def get_cycki(request):
         print(results)
         return HttpResponse(results, mimetype)
     else:
-        data = 'fail'
+        data = Disease.objects.all()[:10]
     print("**************************")
     mimetype = 'application/json'
     print(data)

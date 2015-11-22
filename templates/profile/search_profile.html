@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/cyckowanie.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
+
+{% block title %}Wyszukiwarka{% endblock %}
+
+
+{% block left-content %}
+<h3>Ostatnio dodane choroby</h3>
+<ul>
+    {% for disease in diseases_list %}
+        <div class="description_disease_short">
+        <li>
+        <a href="/disease/{{disease.id}}">
+            {{ disease.name|upper }}
+        </a>
+        </li>
+        </div>
+
+    {% endfor %}
+</ul>
+{% endblock %}
+{% block content %}
+
+<p>Wyszukaj osoby</p>
+<input type="text" id="reksio_pomocnik" name="last_name_searchbox" class="name_searchbox" value=""/>
+<p>Ostatnio omawianie:</p>
+
+{% for disease in diseases_list %}
+<div class="disease">
+<div><p>{{ disease.Name}}</p></div>
+<h3><a href="/disease/{{disease.id}}">
+    {{ disease.name|upper }}
+</a>
+</h3>
+Opis:
+    <div class="disease_description">
+<p style="font-size:18px;">{{ disease.description|truncatewords:"10" }}...</p>
+        <a href="/disease/{{disease.id}}">======>>>></a>
+        </div>
+</div>
+<hr>
+{% endfor %}
+
+{% endblock %}

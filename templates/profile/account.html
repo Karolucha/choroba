@@ -53,8 +53,18 @@
 {% endfor %}
 </div>
 {% endblock %}
+<div style="background-color: white;">
+        <button class="btn btn-sucess" ng-click="add_friend('{{user.user.id}}')" id="{{user.user.id}}"><span class="glyphicon glyphicon-plus"/></button>
+</div>
 {% block content %}
 
+
+<nav class="profile">
+    <a href="/add_discussion/"><button class="btn btn-primary">Dodaj grupę dyskusyjną</button></a>
+    <a href="/add_discussion/"><button class="btn btn-primary">Inni użytkownicy</button></a>
+    <a href="/add_discussion/"><button class="btn btn-primary">Dodaj artykuł</button></a>
+    <a href="/add_discussion/"><button class="btn btn-primary">Dodaj chorobę</button></a>
+</nav>
 <div style="margin-top:5%"></div>
 <div class="leave_comment">
   <ul>
@@ -62,17 +72,30 @@
     <li><a href="#tabs-12">Znajomi</a></li>
     <li><a href="#tabs-13">Moje dane</a></li>
     <li><a href="#tabs-14">Moje komentarze</a></li>
-    <li><a href="#tabs-5">Dodaj artykuł</a></li>
-    <li><a href="#tabs-6">Dodaj chorobę</a></li>
-    <li><a href="#tabs-7">Dodaj grupę dyskusyjną</a></li>
   </ul>
 <div id="tabs-11">
 <div class=row>
-    <div class="col-md-3">
+    <div class="col-md-6">
     Liczba udzielonych komentarzy:
     </div>
     <div class="col-md-2">
     {{ my_user.comment_count }}
+    </div>
+</div>
+<div class=row>
+    <div class="col-md-6">
+    Liczba uzbieranych punktów:
+    </div>
+    <div class="col-md-2">
+    {{ my_user.point }}
+    </div>
+</div>
+<div class=row>
+    <div class="col-md-3">
+    Liczba prowadzonych dyskusji:
+    </div>
+    <div class="col-md-2">
+        {{ my_user.discusion_present_count }}
     </div>
 </div>
 {% if    my_user.articles %}
@@ -97,6 +120,7 @@
 </div>
 {% endfor %}
 {% endif %}
+{% if    my_user.diseases %}
 <div class=row>
     <div class="col-md-3">
     Liczba dodanych chorób:
@@ -105,50 +129,52 @@
     {{ my_user.disease_added_count }}
     </div>
 </div>
+{% endif %}
 </div><!--acticity section-->
 <div id="tabs-13">
 <h2 id="personal">To Twoje dane osobowe:</h2>
-<button class="btn btn-success">
-                <span class="glyphicon glyphicon-refresh"/>Odśwież statystyki
-            </button>
-
+    <button class="btn btn-success">
+        <span class="glyphicon glyphicon-refresh"/>Odśwież statystyki
+    </button>
     <form method="POST" action="{% url 'portal.user_views.account' %}">{% csrf_token %}
 <div class=row>
-<div class="col-md-8">
-    <table>
-        <tr><td>Imię </td><td><input type="text" name="name" value="{{ my_user.user.username }}" style="margin-left:5%;border:solid green" > </td></tr>
-        <tr><td>Nazwisko </td><td> <input type="text" name="surname" value="{{ my_user.user.surname }}" style="margin-left:5%;border:solid green" ></td></tr>
-        <tr><td>E-mail</td><td> <input type="text" name="e-mail" value="{{ my_user.user.email }}" style="margin-left:5%;border:solid green" ></td></tr>
-        <tr><td>Data urodzenia</td><td> <input type="date" name="birthday" value="{{ my_user.birthdate }}" style="margin-left:5%;border:solid green" ></td></tr>
-        <tr><td>Liczba prowadzonych dyskusji</td><td> <input type="text" name="fname" value="{{ my_user.discusion_present_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
-        <tr><td>Liczba dodanych chorób</td><td> <input type="text" name="fname" value="{{ my_user.disease_added_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
-       <tr><td>Liczba przyznanych punktów</td><td><input type="text" name="fname" value="{{ my_user.point }}" style="margin-left:5%;border:solid green" readonly></td></tr>
-        <tr><td>Liczba dodanych komentarzy</td><td> <input type="text" name="fname" value="{{ my_user.comment_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
-        <tr><td>O mnie</td><td><input type="text" name="about" value="{{ my_user.note }}" style="margin-left:5%;border:solid green" ></td></tr>
-    </table>
-</div>
-<div class="col-md-2">
-
-</div>
+    <div class="col-md-8">
+        <table>
+            <tr><td>Imię </td><td><input type="text" name="name" value="{{ my_user.user.username }}" style="margin-left:5%;border:solid green" > </td></tr>
+            <tr><td>Nazwisko </td><td> <input type="text" name="surname" value="{{ my_user.user.surname }}" style="margin-left:5%;border:solid green" ></td></tr>
+            <tr><td>E-mail</td><td> <input type="text" name="e-mail" value="{{ my_user.user.email }}" style="margin-left:5%;border:solid green" ></td></tr>
+            <tr><td>Data urodzenia</td><td> <input type="date" name="birthday" value="{{ my_user.birthdate }}" style="margin-left:5%;border:solid green" ></td></tr>
+            <tr><td>O mnie</td><td><input type="text" name="about" value="{{ my_user.note }}" style="margin-left:5%;border:solid green" ></td></tr>
+        </table>
     </div>
-    <input type="submit" style="margin-top:50px;" class="btn btn-success" value="Zatwierdź"/>
+    <div class="col-md-2"></div>
+</div>
+    <input type="submit" style="margin-top:50px;margin-left:20%" class="btn btn-success" value="Zatwierdź"/>
     </form>
+
+<!--<div class=row>-->
+    <!--<div class="col-md-2">Objaśnienie:</div>-->
+    <!--<div class="col-md-2"><button class="glyphicon glyphicon-minus" ng-click="more_dsc()"/></div>-->
+    <!--<div class="col-md-3">-nie publikuj</div>-->
+    <!--<div class="col-md-2"><button class="glyphicon glyphicon-plus" ng-click="more_dsc()"/></div>-->
+    <!--<div class="col-md-3">-upublicznij</div>-->
 
 </div><!--dane #tabs-3 -->
 <div class="tabs-14">
- {% if    my_user.comments %}
- {% for comment in user.comments %}
-        <div class="comment">
-            <img src="../static/images/landscape.png" class="image_little_profile"/>
-            <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
-            <p class="comment_dsc">{{ comment.description }}</p>
-        </div>
-    {% endfor %}
+{% if    my_user.diseases %}
+  {% for comment in user.comments %}
+      <div class="comment">
+        <img src="../static/images/landscape.png" class="image_little_profile"/>
+        <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
+        <p class="comment_dsc">{{ comment.description }}</p>
+      </div>
+  {% endfor %}
+
 {% else %}
-<p>Jeszcze nie dodałeś komentarzy!</p>
+ <!-- <p>Jeszcze nie dodałeś komentarzy!</p>-->
 {% endif %}
 </div><!--dane #tabs-4 -->
-    <div class="tabs-5">
+<div class="tabs-5">
 
 </div><!--dane #tabs-5 -->
 </div><!--Ostatni leave_comment -->

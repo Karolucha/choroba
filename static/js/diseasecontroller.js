@@ -132,9 +132,9 @@ console.log("TU DZIALA CONTROLER");
 $(document).on('focus', '.search-people', function(){
  $(this).css("background-color", "#cccccc");
 });
-    $(document).on('blur', '.search-people', function(){
-        $(this).css("background-color", "#ffffff");
-    });
+$(document).on('blur', '.search-people', function(){
+    $(this).css("background-color", "#ffffff");
+});
 
 
 
