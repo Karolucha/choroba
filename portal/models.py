@@ -57,9 +57,9 @@ class PublicTerms(Document):
 
 
 class Invitation(Document):
-    inviting = ReferenceField(MyUser)
+    inviting = ReferenceField(User)
     invited = ReferenceField(User)
-    discussion = ReferenceField(MyUser, null=True)
+    discussion = ReferenceField('Discussion', null=True)
 
 
 class CommentCategory(Document):

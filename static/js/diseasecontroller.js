@@ -147,6 +147,12 @@ $(document).ready(function() {
          minLength: 2,
     }
     );
+        $('#friend_searching').autocomplete({
+   	 	source: "/api/get_friends",
+         minLength: 2,
+    }
+    );
+     $( "#dialog" ).dialog();
 });
 };
 $scope.cyckowanie();

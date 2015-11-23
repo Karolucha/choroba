@@ -1,13 +1,12 @@
 
-from django.shortcuts import render_to_response, redirect
+from django.shortcuts import render_to_response, redirect,HttpResponse
 from portal.models import *
 from django.http import Http404
 from django.contrib.auth import authenticate, login, logout
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-
 import mongoengine
-
+import json
 #mongoengine.connect('misiowa')
 from mongoengine.django.auth import User
 import pprint
@@ -112,16 +111,51 @@ def account(request):
     print("tu zyja userzy")
     user = User.objects.get(id=request.user.id)
     my_user = MyUser.objects.get(user=user)
+    username_form=""
     if (request.POST):
-        if "text_to_search" in request.POST:
-            username = request.POST['text_to_search']
-            founded_users = MyUser.objects.filter(username__contains=username)
+        if "last_name_searchbox" in request.POST:
+            print('to pytanie o szukanie przyjaciela')
+            username_form = request.POST['last_name_searchbox']
+            print(username_form)
+            founded_user = User.objects.get(username=username_form)
+            print(founded_user)
+            invitation= Invitation(inviting=request.user, invited=founded_user).save()
+            message="Pomyslnie dodano przyjaciol"
         else:
+            print('tu sie bawie')
             if(request.POST['surname']):
                 my_user.user.surname=request.POST['surname']
             # if(request.POST['birthday']):
             #     my_user.birthdate=request.POST['birthday']
             my_user.save()
-        return render_to_response('profile/account.html',{'my_user': my_user,'all_users': all_users, 'founded_users':founded_users}, RequestContext(request))
+            message="wprowadzono nowe dane"
+        return render_to_response('profile/account.html',{'my_user': my_user,'all_users': all_users, 'message_success':message}, RequestContext(request))
     else:
         return render_to_response('profile/account.html', {'my_user': my_user, 'all_users': all_users}, RequestContext(request))
+
+
+def get_friends(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        print("loking for "+q)
+        friends = User.objects.filter(username__icontains=q)[:20]
+
+        results = []
+        for friend in friends:
+            friend_json = {}
+            friend_json['id'] = 1
+            friend_json['label'] = friend.username
+            friend_json['value'] = friend.username
+            print(friend_json)
+            results.append(friend_json)
+        results=json.dumps(results)
+        print("my data: "+str(results))
+        mimetype = 'application/json'
+        print(results)
+        return HttpResponse(results, mimetype)
+    else:
+        data = Disease.objects.all()[:10]
+    print("**************************")
+    mimetype = 'application/json'
+    print(data)
+    return HttpResponse(data, mimetype)

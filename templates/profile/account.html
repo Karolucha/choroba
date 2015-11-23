@@ -23,15 +23,14 @@
 
 {% endfor %}
     Skorzystaj z filtra i zaproś przyjaciół!
-      <form method="POST" action="{% url 'portal.user_views.account' %}"> {{ csrf_token }}
+      <form method="POST" action="{% url 'portal.user_views.account' %}">{% csrf_token %}
 <div class=row>
-        <input type="hidden" name="disease_id" value="{{ disease.id }}"><br/>
     <div class="col-xs-12">
-        <textarea name="text_to_search" class="find_user"></textarea><br/>
+        <input type="text" id="friend_searching" name="last_name_searchbox" class="name_searchbox" value=""/>
     </div>
 </div>
 <div class=row>
-    <div class="col-xs-12">
+    <div class="col-xs-10">
         <input type="submit" name="find_user" class="btn btn-success"/><br/>
     </div>
 </div>
@@ -58,7 +57,11 @@
 </div>
 {% block content %}
 
-
+{% if    message_success %}
+<div id="dialog" title="" style="background-color: white;">
+  <p>{{ message_success }}</p>
+</div>
+{% endif %}
 <nav class="profile">
     <a href="/add_discussion/"><button class="btn btn-primary">Dodaj grupę dyskusyjną</button></a>
     <a href="/add_discussion/"><button class="btn btn-primary">Inni użytkownicy</button></a>

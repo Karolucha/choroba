@@ -38,4 +38,5 @@ urlpatterns = [
     url(r'^login/$', 'portal.user_views.logging'),
     url(r'^logout/$', 'portal.user_views.logouting'),
     url(r'^api/get_cycki/', 'portal.views.get_cycki', name='get_cycki'),
+    url(r'^api/get_friends/', 'portal.user_views.get_friends', name='get_friends'),
 ]
