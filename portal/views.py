@@ -58,7 +58,7 @@ def article(request, article_id):
     return render_to_response('disease/article.html', {'article': get_article}, context_instance=RequestContext(request))
 
 
-def get_cycki(request):
+def get_disease(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
         print("loking for "+q)

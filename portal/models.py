@@ -40,6 +40,7 @@ class MyUser(Document):
     comments = ListField(ReferenceField('Comment'))
     articles = ListField(ReferenceField('Article'))
     diseases = ListField(ReferenceField('Disease'))
+    discussions = ListField(ReferenceField('Discussion'))
     friends = ListField(ReferenceField('self'))
     IsPublicProp = DictField()
   #  for prop in ('self').my_metaclass.get_all_field_names():
@@ -101,7 +102,8 @@ class Discussion(Forum):
     users = ListField(ReferenceField('MyUser'))
     public_term = ReferenceField('PublicTerms')
     date_register = DateTimeField(default=datetime.datetime.now)
-
+    key_words = ListField(StringField())
+    disease = ReferenceField('Disease')
 
 class Article(Document):
     founder = ReferenceField(MyUser)

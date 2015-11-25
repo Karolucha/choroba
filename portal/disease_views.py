@@ -44,6 +44,7 @@ def add_specific_comment(request):
         new_comment.save()
         user = new_comment.user
         user.comments.append(new_comment)
+        user.diseases.append(disease_to_comment)
         user.save()
         disease_to_comment.comments.append(new_comment)
         disease_to_comment.save()
@@ -61,7 +62,10 @@ def add_question(request):
         user_id = request.user.id
         new_comment.user = MyUser.objects.get(user=User.objects.get(id=user_id))
         new_comment.save()
-
+        user = new_comment.user
+        user.comments.append(new_comment)
+        user.diseases.append(disease_to_comment)
+        user.save()
         disease_to_comment.comments.append(new_comment)
         disease_to_comment.save()
     else:
@@ -79,6 +83,10 @@ def add_comment(request):
         new_comment.user = MyUser.objects.get(user=User.objects.get(id=user_id))
         new_comment.point_comment=0.0
         new_comment.save()
+        user = new_comment.user
+        user.comments.append(new_comment)
+        user.diseases.append(disease_to_comment)
+        user.save()
         disease_to_comment.comments.append(new_comment)
         disease_to_comment.save()
     else:

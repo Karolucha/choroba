@@ -7,19 +7,39 @@ import mongoengine
 
 
 def discussion(request, discussion_id):
-    try:
-        get_discussion = Discussion.objects.get(id=discussion_id)
-    except Disease.DoesNotExist:
-        raise Http404("Poll does not exist")
-    return render_to_response('discussion/discussion.html', {'discussion': get_discussion}, context_instance=RequestContext(request))
+    # try:
+    get_discussion = Discussion.objects.get(id=discussion_id)
+    message=""
+    if request.POST:
+        if 'comment_to_add' in request.POST:
+            print('dalej tu')
+            new_comment = Comment(category=CommentCategory.objects.get(name="Discussion"), description=request.POST['comment_to_add'],point_comment=0.0)
+            new_comment.user = MyUser.objects.get(user=User.objects.get(id=request.user.id))
+            new_comment.save()
+            get_discussion.comments.append(new_comment)
+            get_discussion.save()
+            request.POST=None
+        elif 'friend' in request.POST:
+            my_user= MyUser.objects.get(user=User.objects.get(id=request.POST['friend']))
+            invitation= Invitation(inviting=request.user, invited=my_user).save()
+            message="Pomyslnie wysłano zaproszenie"
+    return render_to_response('discussion/discussion.html', {'discussion': get_discussion,'message_success':message, }, context_instance=RequestContext(request))
 
 def add_discussion(request):
     #add_public_terms()
     if request.POST:
-        new_discussion = Discussion(name=request.POST['discussion_name'], description=request.POST['description'])
-        new_discussion.public_term = PublicTerms.objects.get(code=request.POST['term'])
-        new_discussion.founder = MyUser.objects.get(user=User.objects.get(id=request.user.id))
-        new_discussion.save()
+        if 'discussion_name' in request.POST:
+            new_discussion = Discussion(name=request.POST['discussion_name'], description=request.POST['description'])
+            new_discussion.public_term = PublicTerms.objects.get(code=request.POST['term'])
+            my_user= MyUser.objects.get(user=User.objects.get(id=request.user.id))
+            new_discussion.founder = my_user
+            new_discussion.disease =Disease.objects.get(name=request.POST['disease'])
+            new_discussion.key_words =request.POST['key_words'].split()
+            new_discussion.save()
+            my_user.discussions.append(new_discussion)
+            my_user.save()
+        # elif 'friend' in request.POST:
+
         return render_to_response('discussion/discussion.html', {'discussion':new_discussion}, context_instance=RequestContext(request))
     else:
         try:

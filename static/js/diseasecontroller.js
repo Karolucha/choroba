@@ -139,11 +139,11 @@ $(document).on('blur', '.search-people', function(){
 
 
 
-$scope.cyckowanie=function(){
+$scope.autoWidget=function(){
 $(document).ready(function() {
 
     $('#reksio_pomocnik').autocomplete({
-   	 	source: "/api/get_cycki",
+   	 	source: "/api/get_disease",
          minLength: 2,
     }
     );
@@ -151,11 +151,15 @@ $(document).ready(function() {
    	 	source: "/api/get_friends",
          minLength: 2,
     }
+//            $('#friend_searching').autocomplete({
+//   	 	source: "/api/get_friends",
+//         minLength: 2,
+//    }
     );
      $( "#dialog" ).dialog();
 });
 };
-$scope.cyckowanie();
+$scope.autoWidget();
 
 
 });

@@ -84,6 +84,11 @@ def register(request):
     # if(len(errors) != 0):
     #     return render_to_response('profile/register.html', {'errors': errors}, RequestContext(request))
     # else:
+
+
+    if request.user.is_authenticated():
+         my_user = MyUser.objects.get(user=User.objects.get(id=request.user.id))
+         return render_to_response('profile/profile.html', {'my_user': my_user}, RequestContext(request))
     users_from_database = User.objects.all()
     if request.POST:
         User.create_user(username=request.POST['username'], email=request.POST['email'], password=request.POST['password'])
@@ -110,17 +115,24 @@ def account(request):
     print(all_users)
     print("tu zyja userzy")
     user = User.objects.get(id=request.user.id)
+    invitation_list=Invitation.objects.filter(invited=user)
     my_user = MyUser.objects.get(user=user)
     username_form=""
     if (request.POST):
         if "last_name_searchbox" in request.POST:
-            print('to pytanie o szukanie przyjaciela')
             username_form = request.POST['last_name_searchbox']
-            print(username_form)
             founded_user = User.objects.get(username=username_form)
-            print(founded_user)
             invitation= Invitation(inviting=request.user, invited=founded_user).save()
-            message="Pomyslnie dodano przyjaciol"
+            message="Pomyslnie wysłano zaproszenie"
+        elif "accept" in request.POST:
+            invitation = Invitation.objects.get(id=request.POST['invitation'])
+            friend = MyUser.objects.get(user=User.objects.get(id=invitation.inviting.id))
+            my_user.friends.append(friend)
+            my_user.save()
+            friend.friends.append(friend)
+            friend.save()
+            invitation.delete()
+            message="Użytkownik został dodany do znajomych"
         else:
             print('tu sie bawie')
             if(request.POST['surname']):
@@ -129,9 +141,9 @@ def account(request):
             #     my_user.birthdate=request.POST['birthday']
             my_user.save()
             message="wprowadzono nowe dane"
-        return render_to_response('profile/account.html',{'my_user': my_user,'all_users': all_users, 'message_success':message}, RequestContext(request))
+        return render_to_response('profile/account.html',{'my_user': my_user,'all_users': all_users, 'message_success':message, 'invitations':invitation_list}, RequestContext(request))
     else:
-        return render_to_response('profile/account.html', {'my_user': my_user, 'all_users': all_users}, RequestContext(request))
+        return render_to_response('profile/account.html', {'my_user': my_user, 'all_users': all_users, 'invitations':invitation_list}, RequestContext(request))
 
 
 def get_friends(request):
@@ -159,3 +171,33 @@ def get_friends(request):
     mimetype = 'application/json'
     print(data)
     return HttpResponse(data, mimetype)
+
+def inviting(request):
+    friends = MyUser.objects.all()
+    users=set()
+    my_user=MyUser.objects.get(user=User.objects.get(id=request.user.id))
+    propose={}
+    for disease in my_user.diseases:
+        users=set()
+        users.add(my_user)
+        for comment in disease.comments:
+            try:
+                print("TU mamy: "+comment.user.user.username)
+            except Exception as e:
+                pass
+            if comment.user not in users:
+                propose.setdefault(comment.user, 0)
+                propose[comment.user]+=1
+                try:
+                    print(comment.user.user.username)
+                except Exception as e:
+                    pass
+            users.add(comment.user)
+    del propose[None]
+    sorted_propose = sorted(propose, key=lambda x : propose[x])
+    friends=sorted_propose[:2]
+    print(friends)
+    if request.POST:
+        if "invite" in request.POST:
+            pass
+    return render_to_response('profile/inviting.html', {'friends': friends}, RequestContext(request))

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/cyckowanie.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
+
+{% block title %}Wyszukiwarka{% endblock %}
+
+
+{% block left-content %}
+<h3>Ostatnio dodane choroby</h3>
+<ul>
+    {% for disease in diseases_list %}
+        <div class="description_disease_short">
+        <li>
+        <a href="/disease/{{disease.id}}">
+            {{ disease.name|upper }}
+        </a>
+        </li>
+        </div>
+
+    {% endfor %}
+</ul>
+{% endblock %}
+{% block content %}
+
+<p>Wyszukaj interesującej dolegliwości</p>`
+
+<p>Proponowane osoby</p>
+<ul>
+{% for friend in friends %}
+    <li>
+        <div class="row">
+            <form method="POST" action="{% url 'portal.user_views.inviting' %}">{% csrf_token %}
+            <div class="col-md-1"></div>
+            <div class="col-md-2">{{ friend.name }}</div>
+            <div class="col-md-4">{{ friend.user.username }}</div>
+            <div class="col-md-2">
+                <input type="hidden" value="{{ friend.id }}" name="friend">
+                <input type="submit" class="btn btn-primary" value="Zaproś" name="invite"></div>
+            </form>
+        </div>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-2">O sobie:</div>
+            <div class="col-md-4">{{ friend.note }}</div>
+            <div class="col-md-2">
+        </div>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
