@@ -35,10 +35,30 @@
     <hr/>
 <div id="tabs_forum">
     <h3>{{ disease.name|upper }}</h3>
-    <h5>Opis zjawiska:</h5>
-    <div style="border:1px solid #730029; margin:10px;width:50%">
+    <h5>O chorobie:</h5>
+    <div style="border:1px solid #730029; margin:10px;">
     <div id="dsc_disease_short"  style="margin:10px;"> {{ disease.description|truncatewords:"3"}}<button class="glyphicon glyphicon-plus" ng-click="more_dsc()"/></div>
-    <div id="dsc_disease"  style="margin:10px;"> {{ disease.description }}<button style="margin-left:20px;" class="glyphicon glyphicon-minus" ng-click="less_dsc()"/></div>
+    <div id="dsc_disease"  style="margin:10px;">
+      <div class="row">
+          <div class="col-md-2">Opis:</div>
+        <div class="col-md-8">{{ disease.description }}</div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">Leczenie:</div>
+        <div class="col-md-8">{{ disease.cure }}</div>
+        <div class="col-md-4"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-2">Słowa kluczowe:</div>
+        <div class="col-md-4">{{ disease.key_words }}</div>
+        <div class="col-md-4"></div>
+      </div>
+    <div class="row">
+        <div class="col-md-2">Wątek chorobowy założył\a:</div>
+        <div class="col-md-4"><a href="/profile/{{ disease.founder.id }}/">{{ disease.founder.user.username }}</a></div>
+        <div class="col-md-4"></div>
+      </div>
+        <button style="margin-left:20px;" class="glyphicon glyphicon-minus" ng-click="less_dsc()"/></div>
     </div>
     <div id="commentaries">
         {% for comment in disease.comments %}
@@ -46,7 +66,7 @@
             <div class="col-md-8">
             <div class="comment">
                 <img src="../static/images/landscape.png" class="image_little_profile"/>
-                <span class="comment_header">{{ comment.date_publication }}, {{ comment.user.username }}    </span>
+                <span class="comment_header">{{ comment.date_publication|date:"Y-m-d, f" }}, {{ comment.user.user.username }}   </span>
         {% ifequal comment.category.name "Specialized" %}
         <div class="row">
             <p class="comment_dsc">{{ comment.description }}</p>
@@ -203,7 +223,7 @@
 </div>
     </div><!--tabs-forum id-->
 <div id="tabs_hot_question">
-
+W tej dziedzinie jeszcze nie zadano pytań do lekarza
   {% for comment in disease.comments %}
     {% ifequal comment.category.name "Question" %}
         <div class="row">
@@ -216,6 +236,8 @@
                     <p class="comment_dsc">{{ comment.description }}</p>
                 </div>
     {% endifequal %}
+  {% empty %}
+    W tej dziedzinie jeszcze nie zadano pytań do lekarza
   {% endfor %}
     {% for role in myuser.roles %}
         {% ifequal role.name "Specjalista" %}
@@ -229,7 +251,7 @@
 </div><!--tabs-hot_question id-->
 
 <div id="tabs_articles">
-                {% for article in disease.articles %}
+{% for article in disease.articles %}
 <div class="article_left">{{ article.date_publication }}
 <p><strong>
     <a href="/article/{{article.id}}">
@@ -241,11 +263,29 @@
 <div class="description_disease_short">
     {{ article.description|truncatewords:"10" }}... WIĘCEJ
 </div>
+{% empty %}
+    Jeszcze nie dodano artykułu w tym wątku chorobowym
 {% endfor %}
 </div><!--tabs-article id-->
 <div id="tabs_discussion">
     W wątku choroby {{disease.name }} założono grupy dyskusyjne:
 
+{% for article in disease.articles %}
+<div class="article_left">{{ article.date_publication }}
+<p><strong>
+    <a href="/article/{{article.id}}">
+        {{ article.name }}
+    </a>
+</strong>
+</p>
+    </div>
+<div class="description_disease_short">
+    {{ article.description|truncatewords:"10" }}... WIĘCEJ
+</div>
+{% empty %}
+    Niestety,<br/>
+    Jeszcze nie założono grup dyskusyjnych
+{% endfor %}
 </div><!--tabs-discussion id-->
 </div><!--forum_question id-->
 

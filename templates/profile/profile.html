@@ -31,14 +31,14 @@ Na razie brak znajomych
     <h2>Użytkownik: {{ my_user.user.username }}</h2>
     <div class="row">
         <div class="col-md-4">
-            <button class="btn btn-success">
-                <span class="glyphicon glyphicon-refresh"/>Odśwież statystyki
-            </button>
+            <!--<button class="btn btn-success">-->
+                <!--<span class="glyphicon glyphicon-refresh"/>Odśwież statystyki-->
+            <!--</button>-->
         </div>
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <form method="POST" action="{% url 'portal.user_views.add_friend' user_id=my_user.id %}">{% csrf_token %}
-                <input type="submit" class="btn btn-success">Dodaj przyjaciela</input>
+                <input type="submit" class="btn btn-success" value="Dodaj przyjaciela"/>
             </form>
         </div>
 </div>
@@ -47,7 +47,7 @@ Na razie brak znajomych
     <div class="col-md-2"></div>
 <table>
     <tr><td>Imię </td><td><input type="text" name="name" value="{{ my_user.user.username }}" style="margin-left:5%;border:solid green" > </td></tr>
-    <tr><td>Data urodzenia</td><td> <input type="date" name="birthday" value="{{ my_user.birthdate }}" style="margin-left:5%;border:solid green" readonly></td></tr>
+    <tr><td>Data urodzenia</td><td> <input type="date" name="birthday" value="{{ my_user.birthdate|default:"" }}" style="margin-left:5%;border:solid green" readonly></td></tr>
     <tr><td>Liczba prowadzonych dyskusji</td><td> <input type="text" name="fname" value="{{ my_user.discusion_present_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
     <tr><td>Liczba dodanych chorób</td><td> <input type="text" name="fname" value="{{ my_user.disease_added_count }}" style="margin-left:5%;border:solid green" readonly></td></tr>
     <tr><td>Liczba przyznanych punktów</td><td><input type="text" name="fname" value="{{ my_user.point }}" style="margin-left:5%;border:solid green" readonly></td></tr>

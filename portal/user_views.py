@@ -61,8 +61,8 @@ def add_friend(request, user_id):
     return redirect(request.META['HTTP_REFERER'], context_instance=RequestContext(request))
 
 def profile(request, user_id):
-    user = User.objects.get(id=request.user.id)
-    my_user = MyUser.objects.get(user=user)
+    # user = User.objects.get(id=request.user.id)
+    my_user = MyUser.objects.get(id=user_id)
 
     if (request.POST):
 
@@ -139,6 +139,10 @@ def account(request):
                 my_user.user.surname=request.POST['surname']
             # if(request.POST['birthday']):
             #     my_user.birthdate=request.POST['birthday']
+            if(request.POST['e-mail']):
+                my_user.user.email=request.POST['e-mail']
+            if(request.POST['about']):
+                my_user.note=request.POST['about']
             my_user.save()
             message="wprowadzono nowe dane"
         return render_to_response('profile/account.html',{'my_user': my_user,'all_users': all_users, 'message_success':message, 'invitations':invitation_list}, RequestContext(request))
@@ -193,11 +197,13 @@ def inviting(request):
                 except Exception as e:
                     pass
             users.add(comment.user)
-    del propose[None]
+    if None in propose.keys():
+        del propose[None]
     sorted_propose = sorted(propose, key=lambda x : propose[x])
     friends=sorted_propose[:2]
     print(friends)
     if request.POST:
         if "invite" in request.POST:
             pass
-    return render_to_response('profile/inviting.html', {'friends': friends}, RequestContext(request))
+    diseases = Disease.objects.all().order_by('-date_publication')[:3]
+    return render_to_response('profile/inviting.html', {'diseases_list': diseases,'friends': friends}, RequestContext(request))

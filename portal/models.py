@@ -23,9 +23,9 @@ class Image(Document):
 
 class MyUser(Document):
     user = ReferenceField(User)
-    birthdate = DateTimeField(null=True)
-    sex = StringField(max_length=1, null=True)
-    note = StringField(max_length=500, null=True)
+    birthdate = DateTimeField(null=True, default="")
+    sex = StringField(max_length=1, default="F")
+    note = StringField(max_length=500, default="")
     point = FloatField(null=True, default=0.0)
     comment_count = IntField(null=True, default=0)
     disease_added_count = IntField(null=True, default=0)
@@ -90,7 +90,8 @@ class Forum(Document):
     images = ListField(ImageField(collection_name="forum"))
     founder = ReferenceField('MyUser')
     meta = {'allow_inheritance': True}
-
+    date_publication = DateTimeField(default=datetime.datetime.now)
+    key_words = ListField(StringField())
 
 class Disease(Forum):
     cure = StringField(max_length=1000, null=True)
@@ -102,18 +103,22 @@ class Discussion(Forum):
     users = ListField(ReferenceField('MyUser'))
     public_term = ReferenceField('PublicTerms')
     date_register = DateTimeField(default=datetime.datetime.now)
-    key_words = ListField(StringField())
     disease = ReferenceField('Disease')
 
 class Article(Document):
     founder = ReferenceField(MyUser)
     date_publication = DateTimeField(default=datetime.datetime.now)
-    last_modification = DateTimeField(default=datetime.datetime.now)
+    last_modification = DateTimeField()
     name = StringField(max_length=200)
     description = StringField()
     images = ListField(ImageField(collection_name="article"))
+    point = FloatField(default=0.0)
+    disease = ReferenceField('Disease')
 
+class Specialist(User):
+    license = IntField()
 
+    
 # userRole = UserRoles(name='normal')
 # userRole.save()
 # userRole = UserRoles(name='admin')

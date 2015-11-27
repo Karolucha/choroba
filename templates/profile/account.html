@@ -64,9 +64,9 @@
 {% endif %}
 <nav class="profile">
     <a href="/add_discussion/"><button class="btn btn-primary">Dodaj grupę dyskusyjną</button></a>
-    <a href="/add_discussion/"><button class="btn btn-primary">Inni użytkownicy</button></a>
+    <a href="/inviting/"><button class="btn btn-primary">Inni użytkownicy</button></a>
     <a href="/add_discussion/"><button class="btn btn-primary">Dodaj artykuł</button></a>
-    <a href="/add_discussion/"><button class="btn btn-primary">Dodaj chorobę</button></a>
+    <a href="/add_disease/"><button class="btn btn-primary">Dodaj chorobę</button></a>
 </nav>
 <div style="margin-top:5%"></div>
 <div class="leave_comment">
@@ -92,6 +92,14 @@
     </div>
     <div class="col-md-2">
     {{ my_user.point }}
+    </div>
+</div>
+<div class=row>
+<div class="col-md-3">
+    Liczba Założonych dyskusji:
+    </div>
+    <div class="col-md-2">
+        {{ my_user.discussion_added_count }}
     </div>
 </div>
 <div class=row>
@@ -185,8 +193,8 @@ Zaproszenia:
             <tr><td>Imię </td><td><input type="text" name="name" value="{{ my_user.user.username }}" style="margin-left:5%;border:solid green" > </td></tr>
             <tr><td>Nazwisko </td><td> <input type="text" name="surname" value="{{ my_user.user.surname }}" style="margin-left:5%;border:solid green" ></td></tr>
             <tr><td>E-mail</td><td> <input type="text" name="e-mail" value="{{ my_user.user.email }}" style="margin-left:5%;border:solid green" ></td></tr>
-            <tr><td>Data urodzenia</td><td> <input type="date" name="birthday" value="{{ my_user.birthdate }}" style="margin-left:5%;border:solid green" ></td></tr>
-            <tr><td>O mnie</td><td><input type="text" name="about" value="{{ my_user.note }}" style="margin-left:5%;border:solid green" ></td></tr>
+            <tr><td>Data urodzenia</td><td> <input type="date" name="birthday" value="{{ my_user.birthdate|default:"" }}" style="margin-left:5%;border:solid green" ></td></tr>
+            <tr><td>O mnie</td><td><input type="text" name="about" value="{{ my_user.note|default:"" }}" style="margin-left:5%;border:solid green" ></td></tr>
         </table>
     </div>
     <div class="col-md-2"></div>

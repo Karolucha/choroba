@@ -35,7 +35,7 @@ html, body
 
     .header {width:95%; top:0px;bottom:0px; left:28%; height:80px; border:2px solid #FAFFFA; background:#9FFB88;color:#E34234;}
     .down-header{width:100%; bottom:80px; height:50px; background:-moz-radial-gradient(circle, #FFBF00, #9FFB88); font-size:25px; }
-    .content{     background-repeat: no-repeat;
+    .content{  min-width:500px;   background-repeat: no-repeat;
      background: -webkit-gradient(radial, 50%, from(#f1fcfc), to(#7FFFD4)); /* Safari 5.1+, Chrome 10+ */
      background: -webkit-radial-gradient(50%, #f1fcfc, #7FFFD4); /* Firefox 3.6+ */
      background: -moz-radial-gradient(circle, #7CFC00, #f1fcfc); /* IE 10 */

@@ -147,14 +147,15 @@ $(document).ready(function() {
          minLength: 2,
     }
     );
-        $('#friend_searching').autocomplete({
+    $('#friend_searching').autocomplete({
    	 	source: "/api/get_friends",
          minLength: 2,
     }
-//            $('#friend_searching').autocomplete({
-//   	 	source: "/api/get_friends",
-//         minLength: 2,
-//    }
+    );
+    $('#article_searcher').autocomplete({
+   	 	source: "/api/get_article",
+        minLength: 2,
+    }
     );
      $( "#dialog" ).dialog();
 });

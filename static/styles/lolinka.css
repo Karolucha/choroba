@@ -35,8 +35,8 @@ max-height:200px;
 border-top:2px solid #800000;
 color: 	#660033;
 width:50%;
-height:150px;
-
+min-height:150px;
+max-height:400px;
 }
 .comment_header{
 margin:10px;

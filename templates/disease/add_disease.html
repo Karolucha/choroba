@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+
+
+{% block title %}{{discussion.name}}{% endblock %}
+{% block left-content %}
+    <h4>Ostatnio utworzone wątki chorobowe</h4>
+{% for discussion in discussion_list %}
+    <ul>
+        {{ discussion.name }}
+        <a href="/discussion/{{discussion.id}}">Czytaj</a>
+    </ul>
+{% endfor %}
+{% endblock %}
+{% block content %}
+  <h3>Tworzenie wątku choroby</h3>
+<form method="POST" action="{% url 'portal.views.add_disease' %}">{% csrf_token %}
+
+  <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">Nazwa choroby</div>
+      <div class="col-md-9"><textarea class="find_user" name="disease_name"></textarea></div>
+  </div>
+  <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">Opis choroby:</div>
+      <div class="col-md-9"><textarea class="textarea_comment" name="description"></textarea></div>
+
+  </div>
+  <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">Leczenie:</div>
+      <div class="col-md-9"><textarea  class="textarea_comment" name="cure"></textarea></div>
+  </div>
+ <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">Słowa kluczowe:</div>
+      <div class="col-md-9"><textarea  class="textarea_comment" name="key_words"></textarea></div>
+  </div>
+  <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-5"><input type="submit" class="btn btn-success" value="Dodaję chorobę"></div>
+      <div class="col-md-3"></div>
+  </div>
+</form>
+{% endblock %}

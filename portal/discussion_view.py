@@ -37,6 +37,7 @@ def add_discussion(request):
             new_discussion.key_words =request.POST['key_words'].split()
             new_discussion.save()
             my_user.discussions.append(new_discussion)
+            my_user.discussion_added_count+=1
             my_user.save()
         # elif 'friend' in request.POST:
 

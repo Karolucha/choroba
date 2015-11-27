@@ -31,7 +31,9 @@ def search_disease(request):
         #        if com`m
         diseases = Disease.objects.all().order_by('-id')[:10]
     print(diseases)
-    return render(request, 'disease/search.html', {'diseases_list': diseases}, context_instance=RequestContext(request))
+    diseases_ALL = Disease.objects.order_by('-date_publication')
+    diseases = Disease.objects.all().order_by('-date_publication')[:3]
+    return render(request, 'disease/search.html', {'diseases_list': diseases, 'diseases_all': diseases_ALL}, context_instance=RequestContext(request))
 
 
 def result_disease(request, disease_name):
@@ -42,36 +44,21 @@ def result_disease(request, disease_name):
     return render_to_response('disease/disease.html', {'disease': get_disease}, context_instance=RequestContext(request))
 
 
-def articles(request):
-    try:
-        articles_list = Article.objects.all()
-    except Disease.DoesNotExist:
-        raise Http404("Poll does not exist")
-    return render_to_response('disease/articles.html', {'articles': articles_list}, context_instance=RequestContext(request))
-
-
-def article(request, article_id):
-    try:
-        get_article = Article.objects.get(id=article_id)
-    except Disease.DoesNotExist:
-        raise Http404("Poll does not exist")
-    return render_to_response('disease/article.html', {'article': get_article}, context_instance=RequestContext(request))
-
 
 def get_disease(request):
     if request.is_ajax():
         q = request.GET.get('term', '')
         print("loking for "+q)
-        cyckis = Disease.objects.filter(name__icontains=q)[:20]
+        diseases = Disease.objects.filter(name__icontains=q)[:20]
 
         results = []
-        for cycki in cyckis:
-            cycki_json = {}
-            cycki_json['id'] = 1
-            cycki_json['label'] = cycki.name
-            cycki_json['value'] = cycki.name
-            print(cycki_json)
-            results.append(cycki_json)
+        for disease in diseases:
+            disease_json = {}
+            disease_json['id'] = 1
+            disease_json['label'] = disease.name
+            disease_json['value'] = disease.name
+            print(disease_json)
+            results.append(disease_json)
         results=json.dumps(results)
         print("my data: "+str(results))
         mimetype = 'application/json'
