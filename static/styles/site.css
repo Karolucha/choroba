@@ -19,7 +19,7 @@ body {
      background: -webkit-radial-gradient(50%, #f1fcfc, #7FFFD4); /* Firefox 3.6+ */
      background: -moz-radial-gradient(circle, #f1fcfc, #7FFFD4); /* IE 10 */
      background: -ms-radial-gradient(circle, #f1fcfc, #C0D727); /* Opera couldn't do radial gradients, then at some point they started supporting the -webkit- syntax, how it kinda does but it's kinda broken (doesn't do sizing) */
-    background-image:url("../images/fraktak.jpg");
+    background-image:url("../images/hawran.JPG");
 }
 html, body
     .page {position:relative; height:100%;}

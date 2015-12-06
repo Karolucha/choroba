@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'portal',
     'djangular',
     'mongoengine.django.mongo_auth',
+    'rest_framework',
 
 )
 

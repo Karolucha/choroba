@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+
+
+{% block title %}{{discussion.name}}{% endblock %}
+{% block left-content %}
+    <h4>Ostatnio utworzone wątki chorobowe</h4>
+{% for discussion in discussion_list %}
+    <ul>
+        {{ discussion.name }}
+        <a href="/discussion/{{discussion.id}}">Czytaj</a>
+    </ul>
+{% endfor %}
+{% endblock %}
+{% block content %}
+  <h3>Tworzenie wątku choroby</h3>
+<form method="POST" action="{% url 'portal.views.question' question.id %}">{% csrf_token %}
+
+  <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">Pacjent:</div>
+      <div class="col-md-9"><a href="/profile/{{ question.user.user.id }}/">{{ question.user.username }}</a></div>
+  </div>
+  <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">Pyta:</div>
+      <div class="col-md-7" style="background-color:white;box-shadow: 2px 2px 2px #006633; border-radius: 4px;">
+          {{ question.question }}
+      </div>
+
+  </div>
+  <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">Odpowiedz:</div>
+      <div class="col-md-9"><textarea  class="textarea_comment" name="answer"></textarea></div>
+  </div>
+ <div class="row">
+      <div class="col-md-1"></div>
+      <div class="col-md-2">Choroba:</div>
+      <div class="col-md-9"><input type="text" id="reksio_pomocnik" class="textarea_comment" name="disease"/></div>
+  </div>
+  <div class="row">
+      <div class="col-md-4"></div>
+      <div class="col-md-5"><input type="submit" class="btn btn-success" value="Udzielam odpowiedzi"></div>
+      <div class="col-md-3"></div>
+  </div>
+</form>
+{% endblock %}

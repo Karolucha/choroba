@@ -8,7 +8,7 @@ from mongoengine import *
 #from django_mongoengine.auth.models import User
 from mongoengine.django.auth import User
 print(connect('misiowa'))
-
+from rest_framework import serializers
 
 class UserRoles(Document):
     name = StringField()
@@ -38,6 +38,7 @@ class MyUser(Document):
 
     roles = ListField(ReferenceField(UserRoles))
     comments = ListField(ReferenceField('Comment'))
+    questions = ListField(ReferenceField('Question'))
     articles = ListField(ReferenceField('Article'))
     diseases = ListField(ReferenceField('Disease'))
     discussions = ListField(ReferenceField('Discussion'))
@@ -49,6 +50,9 @@ class MyUser(Document):
     def has_perm(self, perm):
         if perm in self.roles:
             return True
+
+    def _str_(self):
+        return MyUser.user.email
 
 
 
@@ -83,6 +87,13 @@ class Comment(Document):
     disease = ReferenceField('Disease', null=True)
 
 
+class CommentSerialize(serializers.ModelSerializer):
+    user = serializers.StringRelatedField(read_only=True)
+
+    class Meta:
+        model = Comment
+        fields = ('date_publication', 'name', 'description', 'age', 'user')
+
 class Forum(Document):
     name = StringField(max_length=100)
     description = StringField(max_length=1000, null=True)
@@ -92,6 +103,7 @@ class Forum(Document):
     meta = {'allow_inheritance': True}
     date_publication = DateTimeField(default=datetime.datetime.now)
     key_words = ListField(StringField())
+
 
 class Disease(Forum):
     cure = StringField(max_length=1000, null=True)
@@ -105,6 +117,7 @@ class Discussion(Forum):
     date_register = DateTimeField(default=datetime.datetime.now)
     disease = ReferenceField('Disease')
 
+
 class Article(Document):
     founder = ReferenceField(MyUser)
     date_publication = DateTimeField(default=datetime.datetime.now)
@@ -115,10 +128,24 @@ class Article(Document):
     point = FloatField(default=0.0)
     disease = ReferenceField('Disease')
 
+
 class Specialist(User):
     license = IntField()
+    science_title = StringField()
+    specialization = StringField()
+    answered_comments = ListField(ReferenceField('Comment'))
 
-    
+
+class Question(Document):
+    specialist = ReferenceField('Specialist')
+    user = ReferenceField('MyUser')
+    date_publication = DateTimeField(default=datetime.datetime.now)
+    date_answer = DateTimeField()
+    question = StringField()
+    answer = StringField()
+    disease = ReferenceField('Disease')
+
+
 # userRole = UserRoles(name='normal')
 # userRole.save()
 # userRole = UserRoles(name='admin')

@@ -12,18 +12,16 @@ mongoengine.connect('misiowa')
 import json
 
 def index(request):
-    return render(request, 'base/index.html', {'all_news': None}, context_instance=RequestContext(request))
+    diseases = Disease.objects.all().order_by('-date_publication')[:3]
+    diseases_ALL = Disease.objects.order_by('-date_publication')[:10]
+    return render(request, 'disease/search.html', {'diseases_list': diseases, 'diseases_all': diseases_ALL}, context_instance=RequestContext(request))
 
 
 def search_disease(request):
   #  initializer()
-  #  add_perms()
 
     if (request.POST):
-        #print(request.POST.get('last_name_searchbox'))
         diseases = Disease.objects.filter(name__icontains=request.POST.get('last_name_searchbox'))
-        #print(diseases)
-        #diseases = Disease.objects.all()
     else:
         top_comment = Comment.objects.all().order_by('-date_publication')[:10]
         #for disease in Disease.objects.all():
@@ -36,8 +34,44 @@ def search_disease(request):
     return render(request, 'disease/search.html', {'diseases_list': diseases, 'diseases_all': diseases_ALL}, context_instance=RequestContext(request))
 
 
+def hots(request):
+    if request.POST:
+        if 'question' in request.POST:
+            user = MyUser.objects.get(user=User.objects.get(id=request.user.id))
+            question = Question(question=request.POST['question'], user=user)
+            question.save()
+           # question = Question.objects.all()[0]
+            user.questions.append(question)
+            user.save()
+        if 'answer' in request.POST:
+            specialist = Specialist.objects.get(user=MyUser.objects.get(user=User.objects.get(id=request.user.id)))
+            question = Question.objects.get(id=request.POST['question'])
+            question.specialist=specialist
+            question.answer=request.POST['answer']
+            date_answer=datetime.datetime.now
+            if 'disease' in request.POST:
+                question.disease = Disease.objects.get(name=request.POST['disease'])
+            question.save()
+    questions = Question.objects.all().order_by('-date_publication')[:3]
+    print(questions)
+    return render(request, 'disease/hots.html', {'questions_list': questions}, context_instance=RequestContext(request))
+
+
+def question(request, question_id):
+    question = Question.objects.get(id=question_id)
+    if request.POST:
+        specialist = Specialist.objects.get(user=MyUser.objects.get(user=User.objects.get(id=request.user.id)))
+        question.specialist = specialist
+        question.answer = request.POST['answer']
+        question.date_answer = datetime.datetime.now
+        if 'disease' in request.POST:
+            question.disease = Disease.objects.get(name=request.POST['disease'])
+        question.save()
+    return render(request, 'disease/question.html', {'question': question}, context_instance=RequestContext(request))
+
+
 def result_disease(request, disease_name):
-    if (request.POST):
+    if request.POST:
         get_disease = Disease.objects.filter(name__startswith=request.POST.get('last_name_searchbox', 'alergia'))
     else:
         return render_to_response(request, 'base/index.html', {'all_news': None}, context_instance=RequestContext(request))

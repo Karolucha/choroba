@@ -18,6 +18,7 @@ def disease(request, disease_id):
     return render_to_response('disease/disease.html', {'disease': get_disease, 'myuser':user}, context_instance=RequestContext(request))
 
 
+
 def like_comment(request):
     if request.POST:
         commentary= Comment.objects.get(id=request.POST['commentary_id'])

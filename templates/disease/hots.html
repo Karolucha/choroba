@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% load staticfiles %}
+<script type="text/javascript" src="{% static 'js/cyckowanie.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'styles/lolinka.css' %}"/>
+
+{% block title %}Dyżur{% endblock %}
+{% block left-content %} Ostatnie artykuły
+<h2>Artykuły</h2>
+{% for article in articles %}
+<div class="article_left">{{ article.date_publication }}
+<p><strong>
+    <a href="/article/{{article.id}}">
+        {{ article.name }}
+    </a>
+</strong>
+</p>
+    </div>
+<div class="description_disease_short">
+    {{ article.description|truncatewords:"10" }}... WIĘCEJ
+</div>
+{% endfor %}
+{% endblock %}
+{% block content %}
+<p style="font-size:26px;"> Tu zadaj pytanie:</p>
+<form action="{% url 'portal.views.hots' %}" method="POST">
+    {% csrf_token %}
+    <input type="text"  name="question" class="name_searchbox" value=""/>
+    <input type="submit" id="submit_searchbox" class="btn btn-success" name="search_disease" value="ZADAJĘ PYTANIE"/>
+</form>
+
+<p>Ostatnie zadane pytania:</p>
+{% for question in questions_list %}
+    <div style="background-color:white;box-shadow: 2px 2px 2px #006633; border-radius: 4px;">
+            <p style="font-size:18px;">{{ question.question}} ...</p>
+     {% if question.answer %}
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-4">Odpowiedź:</div>
+            <div class="col-md-6">{{ question.answer }}</div>|
+        </div>
+            <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">Zasugerował:</div>
+            <div class="col-md-4">{{question.specialist.user.user.username}}</div>
+        </div>
+            {% if question.disease %}
+            <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-4">Przeniesiono do wątku:</div>
+            <div class="col-md-4">{{question.disease}}</div>
+        </div>
+            {% endif %}
+    {% else %}
+        <a href="/question/{{question.id}}">ODPOWIADANIE</a>
+    {% endif %}
+    </div>
+    <hr>
+    {% empty %}
+    <p>Nie znaleziono artykułów o takim tytule</p>
+{% endfor %}
+{% endblock %}
