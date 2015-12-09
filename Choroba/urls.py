@@ -32,7 +32,7 @@ urlpatterns = [
 
     url(r'^hots/', 'portal.views.hots'),
     url(r'^question/(?P<question_id>\w+)/$', 'portal.views.question'),
-    url(r'^add_api_question/$', 'portal.views.add_question'),
+    url(r'^api_question/(?P<question_id>\w+)/$', 'portal.views.api_question'),
 
 
 
@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^add_article/', 'portal.views.add_article'),
 
     url(r'^account/$', 'portal.user_views.account'),
+    url(r'^account_api/(?P<account_id>\w+)/$', 'portal.user_views.account_api'),
     url(r'^register/$', 'portal.user_views.register'),
     url(r'^profile/(?P<user_id>\w+)/$', 'portal.user_views.profile'),
 
@@ -50,6 +51,7 @@ urlpatterns = [
     # url(r'^change_profile/$', 'portal.user_views.change_profile'),
 
     url(r'^login/$', 'portal.user_views.logging'),
+    url(r'^logging_api/$', 'portal.user_views.logging_api'),
     url(r'^logout/$', 'portal.user_views.logouting'),
 
     url(r'^api/get_disease/', 'portal.views.get_disease', name='get_disease'),

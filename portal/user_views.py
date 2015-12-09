@@ -25,6 +25,25 @@ import pprint
 #     else:
 #         users_from_database = User.objects.all()
 #         return render_to_response('profile/account.html',{'users_from_database': users_from_database}, RequestContext(request))
+def logging_api(request):
+    results=[]
+    response_api={}
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request, user)
+            response_api['answer':200]  #wszystko ok możesz zalogować
+        else:
+            response_api['answer':500]  #konto wygasło jest nieaktywne
+    else:
+        response_api['answer':404]  #nie znaleziono użytkownika o takich danych
+    mimetype = 'application/json'
+
+    results.append()
+    results=json.dumps(results)
+    return HttpResponse(results, mimetype)
 
 def logging(request):
     username = request.POST['username']
@@ -102,13 +121,34 @@ def register(request):
     else:
         return render_to_response('profile/register.html',{'users': users_from_database}, RequestContext(request))
 
+
 def search_friend(friend):
     all_users = MyUser.objects.all()
     return all_users
 
+
 def get_all_users():
     all_users = MyUser.objects.all()
     return all_users
+
+
+def account_api(request, account_id):
+    '''
+        Tu do profilu uzytkownika aby mógł rprzeglądać wszystko o swojej aktywności
+        Aby wywołaćprześlij id zalogowanego użytkownika w urlu 127.0.0.1:8081/account_api/account_id/
+    '''
+    results = []
+    my_user = MyUser.objects.get(id=account_id)
+    mimetype = 'application/json'
+    results.append(my_user.to_json())
+    results.append(my_user.user.to_json())
+    results.append([question.to_json() for question in my_user.questions]) #pytania jakie kiedykolwiek zadawał
+    results.append([article.to_json() for article in my_user.articles]) #artykuły jakie kiedyś tworzył
+    results.append([comment.to_json() for comment in my_user.comments]) #komentarze usera
+    results=json.dumps(results)
+    return HttpResponse(results, mimetype)
+
+
 @login_required
 def account(request):
     all_users = MyUser.objects.all()

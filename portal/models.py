@@ -144,8 +144,13 @@ class Question(Document):
     question = StringField()
     answer = StringField()
     disease = ReferenceField('Disease')
-
-
+    # def get_json(self):
+    #     json={}
+    #     json['date_publication']=Question.date_publication.__str__()
+    #     json['date_answer']=Question.date_answer.__str__()
+    #     json['question']=Question.question.
+    #     json['answer']=Question.answer.__str__()
+    #     return json
 # userRole = UserRoles(name='normal')
 # userRole.save()
 # userRole = UserRoles(name='admin')

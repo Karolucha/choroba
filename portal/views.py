@@ -69,6 +69,55 @@ def question(request, question_id):
         question.save()
     return render(request, 'disease/question.html', {'question': question}, context_instance=RequestContext(request))
 
+def api_question(request, question_id):
+    '''
+    Prześlij mu id question
+     -post pod kluczem 'question' tekst pytania, question_id daj sztucznie np 0
+     -get po prostu id zadanego pytania, przechowuj id zwrócone w json po zadaniu pytania aby wysyłać
+    '''
+    results = []
+    mimetype = 'application/json'
+
+    if question_id!=0:
+        question = Question.objects.get(id=question_id)
+        results.append(question.to_json())
+
+    if request.POST:
+        question = Question(question=request.POST['question'])
+        #question.save()
+        results.append(question.to_json())
+        results=json.dumps(results)
+
+    results=json.dumps(results)
+    return HttpResponse(results, mimetype)
+
+
+
+def get_article(request):
+    if request.is_ajax():
+        q = request.GET.get('term', '')
+        print("loking for "+q)
+        diseases = Article.objects.filter(name__icontains=q)[:20]
+
+        results = []
+        for disease in diseases:
+            disease_json = {}
+            disease_json['id'] = 1
+            disease_json['label'] = disease.name
+            disease_json['value'] = disease.name
+            print(disease_json)
+            results.append(disease_json)
+        results=json.dumps(results)
+        print("my data: "+str(results))
+        mimetype = 'application/json'
+        print(results)
+        return HttpResponse(results, mimetype)
+    else:
+        data = Disease.objects.all()[:10]
+    print("**************************")
+    mimetype = 'application/json'
+    print(data)
+    return HttpResponse(data, mimetype)
 
 def result_disease(request, disease_name):
     if request.POST:
