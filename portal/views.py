@@ -43,8 +43,9 @@ def hots(request):
            # question = Question.objects.all()[0]
             user.questions.append(question)
             user.save()
+            request.POST={}
         if 'answer' in request.POST:
-            specialist = Specialist.objects.get(user=MyUser.objects.get(user=User.objects.get(id=request.user.id)))
+            specialist = Specialist.objects.get(user=User.objects.get(id=request.user.id))
             question = Question.objects.get(id=request.POST['question'])
             question.specialist=specialist
             question.answer=request.POST['answer']
@@ -53,17 +54,19 @@ def hots(request):
                 question.disease = Disease.objects.get(name=request.POST['disease'])
             question.save()
     questions = Question.objects.all().order_by('-date_publication')[:3]
-    print(questions)
+    # questions_answered= Question.get_answered()
+    # print(questions_answered)
     return render(request, 'disease/hots.html', {'questions_list': questions}, context_instance=RequestContext(request))
 
 
 def question(request, question_id):
     question = Question.objects.get(id=question_id)
     if request.POST:
-        specialist = Specialist.objects.get(user=MyUser.objects.get(user=User.objects.get(id=request.user.id)))
-        question.specialist = specialist
-        question.answer = request.POST['answer']
-        question.date_answer = datetime.datetime.now
+        if 'answer' in request.POST:
+            specialist = Specialist.objects.get(user=User.objects.get(id=request.user.id))
+            question.specialist = specialist
+            question.answer = request.POST['answer']
+            question.date_answer = datetime.datetime.now
         if 'disease' in request.POST:
             question.disease = Disease.objects.get(name=request.POST['disease'])
         question.save()

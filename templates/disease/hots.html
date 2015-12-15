@@ -31,8 +31,8 @@
 
 <p>Ostatnie zadane pytania:</p>
 {% for question in questions_list %}
-    <div style="background-color:white;box-shadow: 2px 2px 2px #006633; border-radius: 4px;">
-            <p style="font-size:18px;">{{ question.question}} ...</p>
+    <div style="background-color:white;box-shadow: 2px 2px 2px #006633; border-radius: 4px;width:70%">
+            <p style="font-size:18px;">{{ question.question|truncatewords:"10"  }} ...</p>
      {% if question.answer %}
         <div class="row">
             <div class="col-md-1"></div>

@@ -144,6 +144,9 @@ class Question(Document):
     question = StringField()
     answer = StringField()
     disease = ReferenceField('Disease')
+    def get_answered(self):
+        if Question.answer:
+            return Question
     # def get_json(self):
     #     json={}
     #     json['date_publication']=Question.date_publication.__str__()
